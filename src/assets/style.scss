@@ -1,0 +1,86 @@
+.geral {
+    position: relative;
+    width: 100vw;
+    height: 100%;
+    display: flex;
+}
+.menu-lateral {
+    width: 20vw;
+    height: 100vh;
+    background: #87067d;
+    color: white;
+}
+.conteudo {
+    width: 80vw;
+    background: rgb(228, 228, 228);
+}
+
+.menu-lateral ul {
+    display: block;
+    list-style-type: none;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0;
+    padding: 1vw 1vw;
+}
+.menu-lateral li {
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.18);
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    text-transform: uppercase;
+    font-size: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.menu-lateral li:hover {
+    background: rgb(178 27 125 / 77%);
+}
+.menu-lateral .ativo {
+    background: rgb(255 0 130 / 77%);
+}
+.menu-lateral li i {
+    margin-right: 5px;
+    font-size: 25px;
+    margin-top: 0px;
+    min-width: 35px;
+}
+
+.menu-lateral .logo {
+    padding: 2vw 0vw;
+    font-weight: bold;
+}
+
+.conteudo {
+    padding: 2vw;
+    padding-top: 5vw;
+}
+
+@media (max-width: 767px) {
+    .menu-lateral {
+        display: none;
+    }
+    .conteudo {
+        width: 100%;
+        min-height: 100vh;
+    }
+    .modal-content {
+        max-height: auto;
+        max-width: 98% !important;
+    }
+    .tabs a {
+        float: left;
+        cursor: pointer;
+        padding: 10px 20px;
+        transition: background-color 0.2s;
+        border-right: none;
+        background-color: #f1f1f1;
+        border-radius: 10px!important;
+        font-weight: bold;
+        color: #484848;
+        margin-right: 15px;
+        margin-bottom: 10px;
+    }
+}
