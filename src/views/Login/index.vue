@@ -61,6 +61,7 @@ export default {
                 Auth.login(data)
                     .then((r) => {
                         localStorage.setItem('last', moment().toDate());
+                        console.log(r.data)
                         this.UserLogin = r.data;
                         this.$notify.success({
                             title: "Sucesso",
@@ -71,6 +72,7 @@ export default {
                         this.$router.push("/dashboard");
                     })
                     .catch((e) => {
+                          console.log(e)
                         this.$message({
                             showClose: true,
                             type: "error",
@@ -155,7 +157,6 @@ export default {
         ),
         url(../../assets/images/login.jpg);
     background-size: cover;
-    margin-top: -158px;
 }
 
 .login-form form {
@@ -266,7 +267,7 @@ export default {
 <style scoped>
 @media (max-width: 991px) {
     .login {
-        margin-top: -120px;
+        margin-top: 0;
     }
     .login-form {
         width: 90%;
