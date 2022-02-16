@@ -10,7 +10,7 @@
       </div>
       <div class="content">
         <div v-if="activetab === 1" class="tabcontent">
-          <div class="conteudo-abas"></div>
+          <div class="conteudo-abas"><exercicio></exercicio></div>
         </div>
         <div v-if="activetab === 2" class="tabcontent">
           <div class="conteudo-abas">
@@ -39,6 +39,7 @@ import Header from "../../components/Header/index.vue";
 import Musculos from "../Exercicios/Musculos.vue";
 import Equipamentos from "../Exercicios/Equipamentos.vue";
 import Categorias from "../Exercicios/Categorias.vue";
+import exercicio from "../Exercicios/exercicio.vue";
 import * as moment from "moment";
 import Swal from "sweetalert2";
 
@@ -49,6 +50,7 @@ export default {
     Musculos,
     Categorias,
     Equipamentos,
+    exercicio
   },
   data() {
     return {
