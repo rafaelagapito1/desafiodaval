@@ -194,7 +194,7 @@
                     </Multiselect>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 text-center">
                   <br /><br />
                   <button
                     @click.prevent="addMusculo()"
@@ -210,7 +210,7 @@
                   <b>Exercícios Escolhidos</b><br /><br />
                   <div class="row">
                     <div
-                      class="col-md-12"
+                      class="col-md-12 editor_for"
                       style="margin-bottom: 100px"
                       v-for="(item, index) in MusculosSelecionados"
                       :key="index"
@@ -385,9 +385,7 @@ export default {
     },
   },
   methods: {
-    open(dados){
-
-    },
+    open(dados) {},
     addMusculo() {
       var obj = {};
       let i = 0;
@@ -816,6 +814,12 @@ pre {
 
 .token.entity {
   cursor: help;
+}
+@media screen and (max-width: 780px) {
+  .editor_for {
+    width: 100%;
+    margin-bottom: 215px !important;
+  }
 }
 </style>
 
