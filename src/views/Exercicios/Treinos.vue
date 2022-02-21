@@ -65,9 +65,10 @@
                 <el-table-column type="expand">
                   <template #default="props">
                     <div class="row content-table">
-                      <div class="col-lg-12">
-                        <b>Descrição:</b>
-                        <p>{{ props.row.descricao }}</p>
+                      <div class="col-lg-12 text-left">
+                        <el-button type="success" round @click="open(props.row)"
+                          >Visualizar Treinar</el-button
+                        >
                       </div>
                     </div>
                   </template>
@@ -207,7 +208,6 @@
                 <div class="col-md-12" v-if="MusculosSelecionados != []">
                   <br />
                   <b>Exercícios Escolhidos</b><br /><br />
-                  {{ MusculosSelecionados }}
                   <div class="row">
                     <div
                       class="col-md-12"
@@ -385,6 +385,9 @@ export default {
     },
   },
   methods: {
+    open(dados){
+
+    },
     addMusculo() {
       var obj = {};
       let i = 0;
