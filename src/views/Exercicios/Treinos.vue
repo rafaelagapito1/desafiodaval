@@ -1,12 +1,13 @@
 <template>
   <section class="page-container">
     <Header></Header>
+
     <div class="content sm-gutter">
       <div class="container-fluid padding-25 sm-padding-10">
         <div class="row">
           <div class="col-12">
             <div class="section-title">
-              <h5>Exercícios</h5>
+              <h5>Treinos</h5>
             </div>
             <div class="action text-left" style="width: 100%">
               <button
@@ -15,7 +16,7 @@
                 v-if="pages === 1"
                 @click.prevent="pages = 2"
               >
-                Cadastrar Exercício  <i class="fas fa-plus"></i>
+                Cadastrar Treinos  <i class="fas fa-plus"></i>
               </button>
               <button
                 type="button"
@@ -36,7 +37,7 @@
                 class="select-default mb-3 responsive"
                 style="width: 200px"
                 v-model="pagination.perPage"
-                placeholder="Por página"
+                placeholder="Per page"
               >
                 <el-option
                   class="select-default"
@@ -50,7 +51,7 @@
             </div>
 
             <div class="block table-block mb-4" style="margin-top: 20px">
-              <h4>Exercícios Cadastrados</h4>
+              <h4>Treinos Cadastrados</h4>
 
               <el-table
                 v-if="tableData.length != 0"
@@ -64,53 +65,14 @@
                 <el-table-column type="expand">
                   <template #default="props">
                     <div class="row content-table">
-                      <div class="col-lg-12 editor">
+                      <div class="col-lg-12">
                         <b>Descrição:</b>
-                        <p v-html="props.row.descricao"></p>
-                      </div>
-
-                      <div class="col-lg-12">
-                        <b>Link Youtube:</b>
-                        <p>
-                          <a :href="props.row.link" target="_BLANK"
-                            >Ver Vídeo</a
-                          >
-                        </p>
-                      </div>
-                      <div class="col-lg-12" v-if="props.row.video">
-                        <b>Arquivo Vídeo:</b>
-                        <p>
-                          <a :href="API + '/' + props.row.video" target="_BLANK"
-                            >Ver Vídeo</a
-                          >
-                        </p>
-                      </div>
-                      <div class="col-lg-12">
-                        <b>Músculos:</b>
-                        <ul class="lista-ul">
-                          <li
-                            v-for="item in props.row.musculos"
-                            :key="item.nome"
-                          >
-                            <span> {{ item.nome }}</span>
-                          </li>
-                        </ul>
-                      </div>
-                      <div class="col-lg-12">
-                        <b>Equipamentos:</b>
-                        <ul class="lista-ul">
-                          <li
-                            v-for="item in props.row.equipamentos"
-                            :key="item.nome"
-                          >
-                            <span> {{ item.nome }}</span>
-                          </li>
-                        </ul>
+                        <p>{{ props.row.descricao }}</p>
                       </div>
                     </div>
                   </template>
                 </el-table-column>
-                <!-- <el-table-column label="Imagem">
+                <el-table-column label="Imagem">
                   <template #default="props">
                     <img
                       style="width: 70px"
@@ -118,16 +80,8 @@
                       alt
                     />
                   </template>
-                </el-table-column> -->
+                </el-table-column>
                 <el-table-column label="Nome" prop="nome"></el-table-column>
-                <el-table-column
-                  label="Categoria"
-                  prop="categoria"
-                ></el-table-column>
-                <el-table-column
-                  label="Referência"
-                  prop="referencia"
-                ></el-table-column>
 
                 <el-table-column label="Ações" width="180">
                   <template #default="props">
@@ -180,17 +134,13 @@
             >
               <form @submit.prevent="SendImage()" class="row">
                 <div class="col-md-12">
-                  <h4>Cadastro de Exercício</h4>
+                  <h4>Cadastro de Treino</h4>
                   <br />
                 </div>
 
-                <div class="col-12 col-md-6">
+                <div class="col-md-12">
                   <p><b>Nome</b></p>
                   <el-input placeholder="" v-model="nome"></el-input>
-                </div>
-                <div class="col-12 col-md-6">
-                  <p><b>Referência</b></p>
-                  <el-input placeholder="" v-model="referencia"></el-input>
                 </div>
                 <br />
                 <div class="col-12 editor">
@@ -211,117 +161,82 @@
                   <br />
                   <br />
                   <br />
-                  <br />
                 </div>
-                <div class="col-md-6">
-                  <p><b>Link Youtube</b></p>
-                  <el-input placeholder="" v-model="link"></el-input>
-                </div>
-                <div class="col-md-6">
-                  <p><b>Categoria </b></p>
-                  <el-select
-                    v-model="categoria"
-                    filterable
-                    required
-                    no-match-text="Nenhum registro encontrado"
-                    placeholder="Selecione a Categoria"
-                    :default-first-option="true"
-                  >
-                    <el-option
-                      v-for="item in categorias"
-                      :key="item.categoria"
-                      :label="item.categoria"
-                      :value="item.categoria"
-                    >
-                    </el-option>
-                  </el-select>
-                </div>
-                <div class="col-md-6">
-                  <br />
-                  <p><b>Músculos </b></p>
 
+                <div class="col-md-9">
+                  <br />
+                  <p><b>Exercícios </b></p>
                   <div>
                     <Multiselect
-                      v-model="Musculo"
-                      mode="tags"
-                      placeholder="Escolha os Musculos"
-                      track-by="nome"
-                      label="nome"
-                      :close-on-select="false"
-                      :search="true"
+                      v-model="value"
+                      placeholder="Escolha os Exercícios"
+                      label="id"
                       :options="Musculos"
                     >
                       <template v-slot:singlelabel="{ value }">
                         <div class="multiselect-single-label">
-                          <img
-                            class="character-option-icon"
+                          <!-- <img
+                            class="character-label-icon"
                             :src="API + '/' + value.imagem"
-                          />
-                          {{ value.nome + " " + value.tipo + "°" }}
+                          /> -->
+                          {{ value.nome }}
                         </div>
                       </template>
 
                       <template v-slot:option="{ option }">
-                        <img
+                        <!-- <img
                           class="character-option-icon"
                           :src="API + '/' + option.imagem"
-                        />
-                        {{ option.nome + " " + option.tipo + "°" }}
-                        <span
-                          v-if="!disabled"
-                          class="multiselect-tag-remove"
-                          @mousedown.prevent="handleTagRemove(option, $event)"
-                        >
-                          <span class="multiselect-tag-remove-icon"></span>
-                        </span>
+                        /> -->
+                        {{ option.nome }}
                       </template>
                     </Multiselect>
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
+                  <br /><br />
+                  <button
+                    @click.prevent="addMusculo()"
+                    style="background: #19ad39; border: 1px solid #19ad39"
+                    class="btn btn-secondary ml-3"
+                  >
+                    <i class="el-icon-plus"></i>
+                    Adicionar
+                  </button>
+                </div>
+                <div class="col-md-12" v-if="MusculosSelecionados != []">
                   <br />
-                  <p><b>Equipamentos </b></p>
-                  <div>
-                    <Multiselect
-                      v-model="Equipamento"
-                      mode="tags"
-                      placeholder="Escolha os Equipamentos"
-                      track-by="nome_equipamento"
-                      label="nome_equipamento"
-                      :close-on-select="false"
-                      :search="true"
-                      :options="Equipamentos"
+                  <b>Exercícios Escolhidos</b><br /><br />
+                  {{ MusculosSelecionados }}
+                  <div class="row">
+                    <div
+                      class="col-md-12"
+                      style="margin-bottom: 100px"
+                      v-for="(item, index) in MusculosSelecionados"
+                      :key="index"
                     >
-                      <template v-slot:singlelabel="{ value }">
-                        <div class="multiselect-single-label">
-                          <img
-                            class="character-option-icon"
-                            :src="API + '/' + value.imagem_equipamento"
-                          />
-                          {{ value.nome_equipamento }}
-                        </div>
-                      </template>
-
-                      <template v-slot:option="{ option }">
-                        <img
-                          class="character-option-icon"
-                          :src="API + '/' + option.imagem_equipamento"
-                        />
-                        {{ option.nome_equipamento }}
-                        <span
-                          v-if="!disabled"
-                          class="multiselect-tag-remove"
-                          @mousedown.prevent="handleTagRemove(option, $event)"
-                        >
-                          <span class="multiselect-tag-remove-icon"></span>
-                        </span>
-                      </template>
-                    </Multiselect>
+                      <p>
+                        <span>{{ index + 1 + "°  " }}</span>
+                        <b>Sets e Repetições: {{ item.nome }}</b>
+                      </p>
+                      <QuillEditor
+                        v-model:content="item.descricao"
+                        content-type="html"
+                        :modules="modules"
+                        toolbar="full"
+                        theme="snow"
+                      />
+                      <br /><br />
+                    </div>
                   </div>
                 </div>
+
                 <div class="col-md-12">
                   <br />
-                  <p><b>Vídeo do Exercício:</b></p>
+                  <br />
+                  <br />
+                  <br />
+                  <p><b>Image do Treino:</b></p>
                   <label
                     for="fileImage"
                     style="
@@ -340,7 +255,7 @@
                     type="file"
                     class="form-control form-control-sm mb-2 custom-file-upload"
                     ref="loadImage"
-                    accept=".mp4"
+                    accept="/*"
                     @change="showFile()"
                   />
                   <br />
@@ -396,12 +311,14 @@ export default {
   components: { Header, Multiselect, QuillEditor },
   data() {
     return {
-      link: "",
+      MusculosSelecionados: [],
+      value: [],
+      descricao: "",
       categoria: "",
       categorias: "",
-      Musculo: [],
+      Musculo: "",
       Musculos: "",
-      Equipamento: [],
+      Equipamento: "",
       Equipamentos: "",
       render: false,
       fileImage: null,
@@ -409,7 +326,6 @@ export default {
       fileName: false,
       activetab: 1,
       referencia: "",
-      descricao: "",
       nome: null,
       imagem_musculo: null,
       load: false,
@@ -469,6 +385,18 @@ export default {
     },
   },
   methods: {
+    addMusculo() {
+      var obj = {};
+      let i = 0;
+      for (; i <= this.Musculos.length - 1; i++) {
+        if (this.Musculos[i].nome === this.value) {
+          obj.id = this.Musculos[i].id;
+          obj.nome = this.Musculos[i].nome;
+          obj.descricao = "";
+        }
+      }
+      this.MusculosSelecionados.push(obj);
+    },
     handleExpandChange(row, expandedRows) {
       const id = row.idParaOrganizar;
       const lastId = this.expandRowKeys[0];
@@ -482,7 +410,6 @@ export default {
     showFile() {
       this.load = true;
       var file = this.$refs.loadImage.files[0];
-      this.name_video = this.$refs.loadImage.files[0].name;
       const getBase64 = (file) =>
         new Promise(function (resolve, reject) {
           let reader = new FileReader();
@@ -493,6 +420,7 @@ export default {
       getBase64(file)
         .then((result) => {
           this.render = result;
+          console.log(result);
           this.load = false;
         })
         .catch((e) => console.log("deu erro:", e));
@@ -501,29 +429,25 @@ export default {
       this.load = true;
       let data = {
         nome: this.nome,
-        arquivo: this.render,
-        referencia: this.referencia,
+        imagem: this.render,
         descricao: this.descricao,
-        link: this.link,
-        categoria: this.categoria,
-        musculos: this.Musculo,
-        equipamentos: this.Equipamento,
+        exercicios: this.MusculosSelecionados,
       };
       console.log(data);
-      Auth.CadastroExercicio(data)
+      Auth.CadastroTreino(data)
         .then((r) => {
           console.log(r.data.resultado);
-          if (r.data.resultado === "Exercício cadastrado anteriormente") {
-            this.$notify({
-              message: "Exercício já cadastrado!",
-              title: "Falha!",
-              type: "Error",
-            });
-          } else {
+          if (r.data.resultado === "Treino cadastrado com sucesso") {
             this.$notify({
               message: "Cadastrado com Sucesso!",
               title: "Sucesso",
               type: "success",
+            });
+          } else {
+            this.$notify({
+              message: "Equipamento já cadastrado!",
+              title: "Falha!",
+              type: "Error",
             });
           }
         })
@@ -538,21 +462,12 @@ export default {
           this.showModal = false;
           this.load = false;
           this.render = false;
-          this.nome = "";
-          this.render = null;
-          this.referencia = "";
-          this.descricao = "";
-          this.link = "";
-          this.categoria = [];
-          this.Musculo = [];
-          this.Equipamento = [];
-          this.name_video = false;
           this.getItens();
         });
     },
     getItens() {
       this.load = true;
-      Auth.getExercicios()
+      Auth.getTreinos()
         .then((r) => {
           this.tableData = r.data.reverse();
           let i = 0;
@@ -574,11 +489,11 @@ export default {
           this.load = false;
         });
     },
-    getMusculos() {
+    getExercicios() {
       this.load = true;
-      Auth.getMusculo()
+      Auth.getExercicios()
         .then((r) => {
-          this.Musculos = r.data.musculos.reverse();
+          this.Musculos = r.data.reverse();
           let i = 0;
           for (; i <= this.Musculos.length - 1; i++) {
             this.Musculos[i].value = this.Musculos[i].nome;
@@ -590,13 +505,9 @@ export default {
     },
     getEquipamentos() {
       this.load = true;
-      Auth.getEquipamento()
+      Auth.getCategoria()
         .then((r) => {
-          this.Equipamentos = r.data.equipamento.reverse();
-          let i = 0;
-          for (; i <= this.Equipamentos.length - 1; i++) {
-            this.Equipamentos[i].value = this.Equipamentos[i].nome_equipamento;
-          }
+          this.categorias = r.data.categorias.reverse();
         })
         .finally(() => {
           this.load = false;
@@ -607,8 +518,7 @@ export default {
   created() {
     this.getItens();
     this.getCategorias();
-    this.getMusculos();
-    this.getEquipamentos();
+    this.getExercicios();
     Auth.defaultW().then((r) => {
       this.API = r;
     });
@@ -903,50 +813,6 @@ pre {
 
 .token.entity {
   cursor: help;
-}
-
-.character-option-icon {
-  height: 60px;
-}
-.ql-editor p,
-ul li {
-  color: black !important;
-}
-.lista-ul img {
-  width: 100%;
-  border-radius: 20px 20px 0px 0px;
-}
-.lista-ul li {
-width: auto;
-    background: #2565d9;
-    margin-bottom: 8px;
-    margin-right: 5px;
-    text-align: center;
-    color: white !important;
-    font-weight: bold;
-    border-radius: 20px;
-    padding: 4px 20px;
-    font-size: 11px;
-    margin-top: 5px;
-}
-.lista-ul span {
-  text-transform: uppercase;
-}
-
-.lista-ul {
-  display: flex;
-  list-style-type: none;
-  margin-block-start: 0px;
-  margin-block-end: 0px;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  padding-inline-start: 0px;
-}
-
-@media screen and (max-width: 1024px) {
-  .editor {
-    margin-bottom: 120px;
-  }
 }
 </style>
 

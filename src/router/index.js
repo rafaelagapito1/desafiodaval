@@ -7,6 +7,7 @@ const Exercicios = () => import('../views/Exercicios/index.vue')
 const Equipamentos = () => import('../views/Exercicios/Equipamentos.vue')
 const Categoria = () => import('../views/Exercicios/Categorias.vue')
 const Musculos = () => import('../views/Exercicios/Musculos')
+const Treinos = () => import('../views/Exercicios/Treinos.vue')
 
 const routes = [
 
@@ -19,6 +20,11 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard
+  },
+  {
+    path: '/treino',
+    name: 'Treinos',
+    component: Treinos
   },
   {
     path: '/Equipamentos',

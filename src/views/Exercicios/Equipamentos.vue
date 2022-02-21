@@ -63,7 +63,8 @@
                 ref="tableData"
               >
                 <el-table-column type="expand">
-                  <template #default="props"> </template>
+                  <template #default="props">
+              </template>
                 </el-table-column>
                 <el-table-column label="Imagem">
                   <template #default="props">

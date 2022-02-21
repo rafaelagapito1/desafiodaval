@@ -8,13 +8,13 @@
           <div class="row">
             <div class="col-12">
               <div class="section-title">
-                <h4>Seções</h4>
+                <h4>Banco de Dados</h4>
               </div>
             </div>
 
             <div class="col-12 col-sm-6 col-md-3 col-lg-3">
               <div class="block counter-block mb-4">
-                <div class="value">18</div>
+                <div class="value">{{ Musculos.length }}</div>
                 <i class="dripicons-stopwatch i-icon"></i>
                 <p class="label">Exercícios</p>
               </div>
@@ -22,41 +22,26 @@
 
             <div class="col-12 col-sm-6 col-md-3 col-lg-3">
               <div class="block counter-block mb-4">
-                <div class="value">16</div>
+                <div class="value">{{ tableData.length }}</div>
+
                 <i class="dripicons-to-do i-icon"></i>
-                <p class="label">Workouts</p>
+                <p class="label">Treinos</p>
               </div>
             </div>
 
             <div class="col-12 col-sm-6 col-md-3 col-lg-3">
               <div class="block counter-block mb-4">
-                <div class="value">8</div>
+                <div class="value">{{ Musculo.length }}</div>
                 <i class="dripicons-user i-icon"></i>
-                <p class="label">Bodyparts</p>
+                <p class="label">Músculos</p>
               </div>
             </div>
 
             <div class="col-12 col-sm-6 col-md-3 col-lg-3">
               <div class="block counter-block mb-4">
-                <div class="value">8</div>
+                <div class="value">{{ Equipamentos.length }}</div>
                 <i class="dripicons-lifting i-icon"></i>
-                <p class="label">Equipments</p>
-              </div>
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-3 col-lg-3">
-              <div class="block counter-block mb-4">
-                <div class="value">4</div>
-                <i class="dripicons-pulse i-icon"></i>
-                <p class="label">Levels</p>
-              </div>
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-3 col-lg-3">
-              <div class="block counter-block mb-4">
-                <div class="value">4</div>
-                <i class="dripicons-trophy i-icon"></i>
-                <p class="label">Goals</p>
+                <p class="label">Equipamentos</p>
               </div>
             </div>
 
@@ -64,7 +49,7 @@
               <div class="block counter-block mb-4">
                 <div class="value">15</div>
                 <i class="dripicons-cutlery i-icon"></i>
-                <p class="label">Recipes</p>
+                <p class="label">Receitas</p>
               </div>
             </div>
 
@@ -78,7 +63,7 @@
 
             <div class="col-12">
               <div class="section-title">
-                <h4>Summary</h4>
+                <h4>Dados</h4>
               </div>
             </div>
 
@@ -88,11 +73,16 @@
                   class="block-heading d-flex align-items-center"
                   style="border: 0; padding-bottom: 0"
                 >
-                  <h5 class="text-truncate">Exercises</h5>
+                  <h5 class="text-truncate">Exercícios</h5>
                   <div class="graph-pills graph-home">
                     <ul class="nav nav-pills" id="pills-tab" role="tablist">
                       <li class="nav-item">
-                        <a class="nav-link active active-2" href="#">Ver Mais</a>
+                        <a
+                          class="nav-link active active-2"
+                          href="#"
+                          @click.prevent="goTO('/exercicios')"
+                          >Ver Mais</a
+                        >
                       </li>
                     </ul>
                   </div>
@@ -117,94 +107,18 @@
                       <div class="table-responsive text-no-wrap">
                         <table class="table">
                           <tbody class="text-middle">
-                            <tr>
+                            <tr v-for="(item, index) in Musculos.slice(0, 5)">
                               <td class="product">
                                 <img class="product-img mCS_img_loaded" />
                               </td>
                               <td class="name">
-                                <span class="span-title"
-                                  >Reclining Triceps Press</span
-                                >
+                                <span class="span-title">{{ item.nome }}</span>
                               </td>
                               <td class="price price-td-home">
                                 <a><i class="fa fa-cog a-i-color"></i></a>
                                 <a
                                   style="cursor: pointer"
                                   onclick="alertdelete_e19();"
-                                  ><i class="fa fa-trash-o a-i-color"></i
-                                ></a>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td class="product">
-                                <img class="product-img mCS_img_loaded" />
-                              </td>
-                              <td class="name">
-                                <span class="span-title"
-                                  >Barbell High Pull</span
-                                >
-                              </td>
-                              <td class="price price-td-home">
-                                <a><i class="fa fa-cog a-i-color"></i></a>
-                                <a
-                                  style="cursor: pointer"
-                                  onclick="alertdelete_e18();"
-                                  ><i class="fa fa-trash-o a-i-color"></i
-                                ></a>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td class="product">
-                                <img class="product-img mCS_img_loaded" />
-                              </td>
-                              <td class="name">
-                                <span class="span-title"
-                                  >90-degree Static Hold</span
-                                >
-                              </td>
-                              <td class="price price-td-home">
-                                <a><i class="fa fa-cog a-i-color"></i></a>
-                                <a
-                                  style="cursor: pointer"
-                                  onclick="alertdelete_e17();"
-                                  ><i class="fa fa-trash-o a-i-color"></i
-                                ></a>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td class="product">
-                                <img class="product-img mCS_img_loaded" />
-                              </td>
-                              <td class="name">
-                                <span class="span-title">Glutes Stretch</span>
-                              </td>
-                              <td class="price price-td-home">
-                                <a><i class="fa fa-cog a-i-color"></i></a>
-                                <a
-                                  style="cursor: pointer"
-                                  onclick="alertdelete_e16();"
-                                  ><i class="fa fa-trash-o a-i-color"></i
-                                ></a>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td class="product">
-                                <img class="product-img mCS_img_loaded" />
-                              </td>
-                              <td class="name">
-                                <span class="span-title"
-                                  >Single-arm Medicine Ball Pushup</span
-                                >
-                              </td>
-                              <td class="price price-td-home">
-                                <a><i class="fa fa-cog a-i-color"></i></a>
-                                <a
-                                  style="cursor: pointer"
-                                  onclick="alertdelete_e15();"
                                   ><i class="fa fa-trash-o a-i-color"></i
                                 ></a>
                               </td>
@@ -252,11 +166,14 @@
                   class="block-heading d-flex align-items-center"
                   style="border: 0; padding-bottom: 0"
                 >
-                  <h5 class="text-truncate">Workouts</h5>
+                  <h5 class="text-truncate">Treinos</h5>
                   <div class="graph-pills graph-home">
                     <ul class="nav nav-pills" id="pills-tab" role="tablist">
                       <li class="nav-item">
-                        <a class="nav-link active active-2" href=""
+                        <a
+                          class="nav-link active active-2"
+                          href="#"
+                          @click.prevent="goTO('/Treino')"
                           >Ver Mais
                         </a>
                       </li>
@@ -283,103 +200,18 @@
                       <div class="table-responsive text-no-wrap">
                         <table class="table">
                           <tbody class="text-middle">
-                            <tr>
+                            <tr v-for="(item, index) in tableData.slice(0, 5)">
                               <td class="product">
                                 <img class="product-img mCS_img_loaded" />
                               </td>
                               <td class="name">
-                                <span class="span-title"
-                                  >At-Home Cardio for Fat Loss</span
-                                >
-                              </td>
-                              <td class="price price-td-home">
-                                <a href=""
-                                  ><i class="fa fa-cog a-i-color"></i
-                                ></a>
-                                <a
-                                  style="cursor: pointer"
-                                  onclick="alertdelete_w16();"
-                                  ><i class="fa fa-trash-o a-i-color"></i
-                                ></a>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td class="product">
-                                <img
-                                  class="product-img mCS_img_loaded"
-                                  href=""
-                                />
-                              </td>
-                              <td class="name">
-                                <span class="span-title"
-                                  >The Ultimate Full-Body Landmine Workout</span
-                                >
-                              </td>
-                              <td class="price price-td-home">
-                                <a href=""
-                                  ><i class="fa fa-cog a-i-color"></i
-                                ></a>
-                                <a
-                                  style="cursor: pointer"
-                                  onclick="alertdelete_w15();"
-                                  ><i class="fa fa-trash-o a-i-color"></i
-                                ></a>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td class="product">
-                                <img class="product-img mCS_img_loaded" />
-                              </td>
-                              <td class="name">
-                                <span class="span-title"
-                                  >Real Man's Cardio Workout</span
-                                >
+                                <span class="span-title">{{ item.nome }}</span>
                               </td>
                               <td class="price price-td-home">
                                 <a><i class="fa fa-cog a-i-color"></i></a>
                                 <a
                                   style="cursor: pointer"
-                                  onclick="alertdelete_w14();"
-                                  ><i class="fa fa-trash-o a-i-color"></i
-                                ></a>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td class="product">
-                                <img class="product-img mCS_img_loaded" />
-                              </td>
-                              <td class="name">
-                                <span class="span-title"
-                                  >Top It Off With This Full-Body Finisher</span
-                                >
-                              </td>
-                              <td class="price price-td-home">
-                                <a><i class="fa fa-cog a-i-color"></i></a>
-                                <a
-                                  style="cursor: pointer"
-                                  onclick="alertdelete_w13();"
-                                  ><i class="fa fa-trash-o a-i-color"></i
-                                ></a>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td class="product">
-                                <img class="product-img mCS_img_loaded" />
-                              </td>
-                              <td class="name">
-                                <span class="span-title"
-                                  >Level Up Your Triceps Routine</span
-                                >
-                              </td>
-                              <td class="price price-td-home">
-                                <a><i class="fa fa-cog a-i-color"></i></a>
-                                <a
-                                  style="cursor: pointer"
-                                  onclick="alertdelete_w12();"
+                                  onclick="alertdelete_e19();"
                                   ><i class="fa fa-trash-o a-i-color"></i
                                 ></a>
                               </td>
@@ -427,11 +259,16 @@
                   class="block-heading d-flex align-items-center"
                   style="border: 0; padding-bottom: 0"
                 >
-                  <h5 class="text-truncate">Posts</h5>
+                  <h5 class="text-truncate">Músculos</h5>
                   <div class="graph-pills graph-home">
                     <ul class="nav nav-pills" id="pills-tab" role="tablist">
                       <li class="nav-item">
-                        <a class="nav-link active active-2">Ver Mais</a>
+                        <a
+                          class="nav-link active active-2"
+                          href="#"
+                          @click.prevent="goTO('/musculos')"
+                          >Ver Mais</a
+                        >
                       </li>
                     </ul>
                   </div>
@@ -455,102 +292,19 @@
                     >
                       <div class="table-responsive text-no-wrap">
                         <table class="table">
-                          <tbody class="text-middle">
-                            <tr>
+                             <tbody class="text-middle">
+                            <tr v-for="(item, index) in Musculo.slice(0, 5)">
                               <td class="product">
                                 <img class="product-img mCS_img_loaded" />
                               </td>
                               <td class="name">
-                                <span class="span-title"
-                                  >5 Ways to Torch Your Core in Every
-                                  Workout</span
-                                >
+                                <span class="span-title">{{ item.nome }}</span>
                               </td>
                               <td class="price price-td-home">
                                 <a><i class="fa fa-cog a-i-color"></i></a>
                                 <a
                                   style="cursor: pointer"
-                                  onclick="alertdelete_p9();"
-                                  ><i class="fa fa-trash-o a-i-color"></i
-                                ></a>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td class="product">
-                                <img class="product-img mCS_img_loaded" />
-                              </td>
-                              <td class="name">
-                                <span class="span-title"
-                                  >Even Light Exercise Can Help You Live
-                                  Longer</span
-                                >
-                              </td>
-                              <td class="price price-td-home">
-                                <a><i class="fa fa-cog a-i-color"></i></a>
-                                <a
-                                  style="cursor: pointer"
-                                  onclick="alertdelete_p8();"
-                                  ><i class="fa fa-trash-o a-i-color"></i
-                                ></a>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td class="product">
-                                <img class="product-img mCS_img_loaded" />
-                              </td>
-                              <td class="name">
-                                <span class="span-title"
-                                  >What to Do If Working Out Is Killing Your
-                                  Knees</span
-                                >
-                              </td>
-                              <td class="price price-td-home">
-                                <a><i class="fa fa-cog a-i-color"></i></a>
-                                <a
-                                  style="cursor: pointer"
-                                  onclick="alertdelete_p7();"
-                                  ><i class="fa fa-trash-o a-i-color"></i
-                                ></a>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td class="product">
-                                <img class="product-img mCS_img_loaded" />
-                              </td>
-                              <td class="name">
-                                <span class="span-title"
-                                  >Jason Statham to Play Assassin in ‘Killer's
-                                  Game': Report</span
-                                >
-                              </td>
-                              <td class="price price-td-home">
-                                <a><i class="fa fa-cog a-i-color"></i></a>
-                                <a
-                                  style="cursor: pointer"
-                                  onclick="alertdelete_p6();"
-                                  ><i class="fa fa-trash-o a-i-color"></i
-                                ></a>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td class="product">
-                                <img class="product-img mCS_img_loaded" />
-                              </td>
-                              <td class="name">
-                                <span class="span-title"
-                                  >Sly Stallone on Death Rumors: 'Ignore This
-                                  Stupidity'</span
-                                >
-                              </td>
-                              <td class="price price-td-home">
-                                <a><i class="fa fa-cog a-i-color"></i></a>
-                                <a
-                                  style="cursor: pointer"
-                                  onclick="alertdelete_p5();"
+                                  onclick="alertdelete_e19();"
                                   ><i class="fa fa-trash-o a-i-color"></i
                                 ></a>
                               </td>
@@ -598,11 +352,16 @@
                   class="block-heading d-flex align-items-center"
                   style="border: 0; padding-bottom: 0"
                 >
-                  <h5 class="text-truncate">Recipes</h5>
+                  <h5 class="text-truncate">Equipamentos</h5>
                   <div class="graph-pills graph-home">
                     <ul class="nav nav-pills" id="pills-tab" role="tablist">
                       <li class="nav-item">
-                        <a class="nav-link active active-2">Ver Mais</a>
+                        <a
+                          class="nav-link active active-2"
+                          href="#"
+                          @click.prevent="goTO('/Equipamentos')"
+                          >Ver Mais</a
+                        >
                       </li>
                     </ul>
                   </div>
@@ -626,97 +385,19 @@
                     >
                       <div class="table-responsive text-no-wrap">
                         <table class="table">
-                          <tbody class="text-middle">
-                            <tr>
+                           <tbody class="text-middle">
+                            <tr v-for="(item, index) in Equipamentos.slice(0, 5)">
                               <td class="product">
                                 <img class="product-img mCS_img_loaded" />
                               </td>
                               <td class="name">
-                                <span class="span-title"
-                                  >Slow-cooker Stuffed Peppers</span
-                                >
+                                <span class="span-title">{{ item.nome_equipamento }}</span>
                               </td>
                               <td class="price price-td-home">
                                 <a><i class="fa fa-cog a-i-color"></i></a>
                                 <a
                                   style="cursor: pointer"
-                                  onclick="alertdelete_r15();"
-                                  ><i class="fa fa-trash-o a-i-color"></i
-                                ></a>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td class="product">
-                                <img class="product-img mCS_img_loaded" />
-                              </td>
-                              <td class="name">
-                                <span class="span-title"
-                                  >Spring Pea Coconut Curry</span
-                                >
-                              </td>
-                              <td class="price price-td-home">
-                                <a><i class="fa fa-cog a-i-color"></i></a>
-                                <a
-                                  style="cursor: pointer"
-                                  onclick="alertdelete_r14();"
-                                  ><i class="fa fa-trash-o a-i-color"></i
-                                ></a>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td class="product">
-                                <img class="product-img mCS_img_loaded" />
-                              </td>
-                              <td class="name">
-                                <span class="span-title"
-                                  >Supergreen Candy Salad</span
-                                >
-                              </td>
-                              <td class="price price-td-home">
-                                <a><i class="fa fa-cog a-i-color"></i></a>
-                                <a
-                                  style="cursor: pointer"
-                                  onclick="alertdelete_r13();"
-                                  ><i class="fa fa-trash-o a-i-color"></i
-                                ></a>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td class="product">
-                                <img class="product-img mCS_img_loaded" />
-                              </td>
-                              <td class="name">
-                                <span class="span-title"
-                                  >A nutritious, muscle-building breakfast</span
-                                >
-                              </td>
-                              <td class="price price-td-home">
-                                <a><i class="fa fa-cog a-i-color"></i></a>
-                                <a
-                                  style="cursor: pointer"
-                                  onclick="alertdelete_r12();"
-                                  ><i class="fa fa-trash-o a-i-color"></i
-                                ></a>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td class="product">
-                                <img class="product-img mCS_img_loaded" />
-                              </td>
-                              <td class="name">
-                                <span class="span-title"
-                                  >Super-Easy Barbacoa &amp; Jicama Tacos</span
-                                >
-                              </td>
-                              <td class="price price-td-home">
-                                <a><i class="fa fa-cog a-i-color"></i></a>
-                                <a
-                                  style="cursor: pointer"
-                                  onclick="alertdelete_r11();"
+                                  onclick="alertdelete_e19();"
                                   ><i class="fa fa-trash-o a-i-color"></i
                                 ></a>
                               </td>
@@ -767,24 +448,166 @@
 <script>
 // @ is an alias to /src test env
 import { reactive, ref } from "vue";
-import Header from "../../components/Header/index.vue";
 import * as moment from "moment";
 import Swal from "sweetalert2";
-
+import Auth from "../../services/routes";
+import Header from "../../components/Header/index.vue";
+import lodash from "lodash";
+import Multiselect from "@vueform/multiselect";
+import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
 export default {
   name: "Home",
-  components: {
-    Header,
-  },
+  components: { Header, Multiselect, QuillEditor },
   data() {
     return {
-      Carousel: "",
-      token: false,
+      MusculosSelecionados: [],
+      value: [],
+      descricao: "",
+      categoria: "",
+      categorias: "",
+      Musculo: "",
+      Musculos: "",
+      Equipamento: "",
+      Equipamentos: "",
+      render: false,
+      fileImage: null,
+      showModal: false,
+      fileName: false,
+      activetab: 1,
+      referencia: "",
+      nome: null,
+      imagem_musculo: null,
+      load: false,
+      tableData: [],
+      API: null,
+      expandRowKeys: [],
+      pages: 1,
+      tipo: 1,
+      name_video: false,
+      pagination: {
+        perPage: 10,
+        currentPage: 1,
+        perPageOptions: [5, 10, 25, 50, 100, 500, 1000],
+        total: 0,
+      },
     };
   },
-  methods: {},
+  computed: {
+    queriedData() {
+      let result = lodash.orderBy(this.tableData, ["ID"], ["desc"]);
+      /*
+                                      let filtered = lodash.filter(result, item => {
+                                        if(this.filter.filterDefault === "ALL") {
+                                          return item.DES_FINANCE_CATEGORY.indexOf('') >=0;
+                                        }
+                                        else {
+                                          return item.DES_FINANCE_CATEGORY.indexOf(this.filter.filterDefault) >=0;
+                                        }  
+                                      });
+
+                                      this.tableDataFiltered = filtered
+                                      */
+      return result.slice(this.from, this.to);
+    },
+    pagedData() {
+      if (!this.tableDataFiltered)
+        return this.tableData.slice(this.from, this.to);
+      else return this.tableDataFiltered.slice(this.from, this.to);
+    },
+    to() {
+      let highBound = this.from + this.pagination.perPage;
+      if (this.total < highBound) {
+        highBound = this.total;
+      }
+      return highBound;
+    },
+    from() {
+      return this.pagination.perPage * (this.pagination.currentPage - 1);
+    },
+    total() {
+      if (!this.tableDataFiltered)
+        this.pagination.total = this.tableData.length;
+      else this.pagination.total = this.tableDataFiltered.length;
+
+      if (!this.tableDataFiltered) return this.tableData.length;
+      else return this.tableDataFiltered.length;
+    },
+  },
+  methods: {
+    getItens() {
+      this.load = true;
+      Auth.getTreinos()
+        .then((r) => {
+          this.tableData = r.data.reverse();
+          let i = 0;
+          for (; i <= this.tableData.length - 1; i++) {
+            this.tableData[i].idParaOrganizar = i;
+          }
+        })
+        .finally(() => {
+          this.load = false;
+        });
+    },
+    getCategorias() {
+      this.load = true;
+      Auth.getCategoria()
+        .then((r) => {
+          this.categorias = r.data.categorias.reverse();
+        })
+        .finally(() => {
+          this.load = false;
+        });
+    },
+    getExercicios() {
+      this.load = true;
+      Auth.getExercicios()
+        .then((r) => {
+          this.Musculos = r.data.reverse();
+          let i = 0;
+          for (; i <= this.Musculos.length - 1; i++) {
+            this.Musculos[i].value = this.Musculos[i].nome;
+          }
+        })
+        .finally(() => {
+          this.load = false;
+        });
+    },
+    goTO(url) {
+      this.$router.push(url);
+    },
+    getEquipamentos() {
+      this.load = true;
+      Auth.getEquipamento()
+        .then((r) => {
+          this.Equipamentos = r.data.equipamento.reverse();
+        })
+        .finally(() => {
+          this.load = false;
+        });
+    },
+    getMusculos() {
+      this.load = true;
+      Auth.getMusculo()
+        .then((r) => {
+          this.Musculo = r.data.musculos.reverse();
+        })
+        .finally(() => {
+          this.load = false;
+        });
+    },
+  },
   mounted() {},
-  created() {},
+  created() {
+    this.getItens();
+    this.getCategorias();
+    this.getExercicios();
+    this.getEquipamentos();
+    this.getMusculos();
+    Auth.defaultW().then((r) => {
+      this.API = r;
+    });
+  },
   setup() {
     const state = reactive({
       testes: "dCasa",

@@ -51,7 +51,7 @@
             </div>
 
             <div class="block table-block mb-4" style="margin-top: 20px">
-              <h4>Equipamentos Cadastrados</h4>
+              <h4>Músculos Cadastrados</h4>
 
               <el-table
                 v-if="tableData.length != 0"
@@ -362,7 +362,7 @@ export default {
       this.load = true;
       Auth.getMusculo()
         .then((r) => {
-          this.tableData = r.data.musculo.reverse();
+          this.tableData = r.data.musculos.reverse();
           let i = 0;
           for (; i <= this.tableData.length - 1; i++) {
             this.tableData[i].idParaOrganizar = i;

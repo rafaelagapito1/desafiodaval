@@ -59,16 +59,39 @@ const Auth = {
 	async CadastroCategoria(data) {
 		return await axios.post(defaultW + '/cadastro_categoria', data);
 	},
+	async CadastroExercicio(data) {
+		return await axios.post(defaultW + '/cadastro_exercicio', data);
+	},
+	async CadastroTreino(data) {
+		return await axios.post(defaultW + '/cadastro_treino', data);
+	},
+	
 	async getCategoria() {
-		return await axios.post(defaultW + '/lista_categorias');
-	},
-	async getMusculo() {
-		return await axios.post(defaultW + '/lista_musculos');
-	},
-	async getEquipamento() {
-		return await axios.post(defaultW + '/lista_equipamentos');
+		return await axios.post(defaultW + '/lista_categorias', {
+			id: 0,
+		});
 	},
 
+	async getMusculo() {
+		return await axios.post(defaultW + '/lista_musculos', {
+			id: 0,
+		});
+	},
+	async getEquipamento() {
+		return await axios.post(defaultW + '/lista_equipamentos', {
+			id: 0,
+		});
+	},
+	async getExercicios() {
+		return await axios.post(defaultW + '/lista_exercicios', {
+			id: 0,
+		});
+	},
+	async getTreinos() {
+		return await axios.post(defaultW + '/lista_treinos', {
+			id: 0,
+		});
+	},
 	async verifyEmailExisting(email) {
 		return await axios.post(url + '/existing-email', {
 			email: email

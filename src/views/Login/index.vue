@@ -74,7 +74,7 @@ export default {
       if (this.validPass === false && this.validEmail === false) {
         this.load = true;
 
-        fetch(this.API + "/login", {
+        fetch(this.API + "/login.php", {
           method: "POST",
           body: JSON.stringify(data),
         })

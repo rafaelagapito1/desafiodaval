@@ -1,7 +1,7 @@
 <template>
-  <nav id="navigation" class="navigation-sidebar bg-primary">
+  <nav id="navigation" class="navigation-sidebar bg-primary" v-if="toggle">
     <div class="navigation-header">
-      <a href="https://wicombit.com/demo/fitpro"
+      <a href="#"   @click.prevent="goTO('/dashboard')"
         ><img
           src="../../assets/images/logovalwhite.png"
           style="max-width: 70px"
@@ -10,7 +10,7 @@
 
     <div class="welcome">
       Bem vinda, <b>Val!</b>
-      <a href="../controller/logout.php" class="sidebar-user"
+      <a href="#" class="sidebar-user"
         ><i class="dripicons-exit"></i
       ></a>
     </div>
@@ -52,11 +52,7 @@
             </li>
 
             <li>
-              <a
-                href="#"
-                class="have-submenu"
-           
-              >
+              <a href="#" class="have-submenu"   @click.prevent="goTO('/Treino')">
                 <span class="icon-thumbnail"
                   ><i class="dripicons-to-do"></i
                 ></span>
@@ -169,14 +165,35 @@
         </div>
       </ul>
     </div>
+    <div
+      class="x"
+      style="
+        position: absolute;
+        right: 0;
+        left: 0;
+        bottom: 80px;
+        color: white;
+        border-radius: 50%;
+        border: 2px solid white;
+        width: 25px;
+        height: 25px;
+        font-weight: bold;
+        padding: 0px 7px;
+        margin: auto;
+      "
+      @click.prevent="off()"
+    >
+      x
+    </div>
   </nav>
   <div class="header fixed-header">
     <div class="container-fluid side-padding">
       <div class="row">
         <div class="col-7 col-md-6 d-lg-none">
           <a
+            @click.prevent="on()"
             id="toggle-navigation"
-            href="javascript:void(0);"
+            href="#"
             class="icon-btn mr-3"
             ><i class="fa fa-bars"></i
           ></a>
@@ -197,14 +214,48 @@
 <script>
 export default {
   methods: {
+    on() {
+      this.toggle = true;
+    },
+    off() {
+      this.toggle = false;
+    },
     goTO(url) {
       this.$router.push(url);
     },
+    isMobile() {
+      if (
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        )
+      ) {
+        this.toggle = false;
+      }
+    },
+  },
+  created() {
+    this.isMobile();
   },
 
   data() {
-    return {};
+    return {
+      toggle: true,
+    };
   },
 };
 </script>
 
+<style >
+.x {
+  display: none;
+  z-index: 999;
+}
+@media screen and (max-width: 680px) {
+  .navigation-sidebar {
+    width: 300px;
+  }
+  .x {
+    display: block;
+  }
+}
+</style>

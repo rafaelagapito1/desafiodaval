@@ -51,6 +51,8 @@
             </div>
 
             <div class="block table-block mb-4" style="margin-top: 20px">
+                 <h4>Categorias Cadastrados</h4>
+
               <el-table
                 v-if="tableData.length != 0"
                 :data="queriedData"
