@@ -63,8 +63,7 @@
                 ref="tableData"
               >
                 <el-table-column type="expand">
-                  <template #default="props">
-              </template>
+                  <template #default="props"> </template>
                 </el-table-column>
                 <el-table-column label="Imagem">
                   <template #default="props">
@@ -81,13 +80,15 @@
                 ></el-table-column>
                 <el-table-column label="Ações">
                   <template #default="props">
-                    <a
+                    <!-- <a
                       class="btn btn-small btn-primary"
                       href="#"
                       style="margin-right: 5px"
                       >Editar</a
-                    >
-                    <a class="btn btn-small btn-danger btn-delete deleteItem"
+                    > -->
+                    <a
+                      class="btn btn-small btn-danger btn-delete deleteItem"
+                      @click.prevent="deleteItem(props.row)"
                       >Deletar</a
                     >
                   </template>
@@ -351,6 +352,25 @@ export default {
         })
         .finally(() => {
           this.load = false;
+        });
+    },
+    deleteItem(row) {
+      this.load = true;
+      let data = {
+        id: row.id,
+        tabela: 2,
+      };
+      Auth.deleteItem(data)
+        .then((r) => {
+          this.$notify({
+            message: "Deletado com Sucesso!",
+            title: "Sucesso",
+            type: "success",
+          });
+        })
+        .finally(() => {
+          this.load = false;
+          this.getItens();
         });
     },
   },

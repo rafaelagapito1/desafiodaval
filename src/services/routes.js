@@ -71,7 +71,9 @@ const Auth = {
 			id: 0,
 		});
 	},
-
+	async deleteItem(data) {
+		return await axios.post(defaultW + '/delete', data);
+	},
 	async getMusculo() {
 		return await axios.post(defaultW + '/lista_musculos', {
 			id: 0,

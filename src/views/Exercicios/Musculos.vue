@@ -74,21 +74,27 @@
                     />
                   </template>
                 </el-table-column>
-                <el-table-column
-                  label="Nome"
-                  prop="nome"
-                ></el-table-column>
+                <el-table-column label="Nome" prop="nome"></el-table-column>
                 <el-table-column label="Ações" width="180">
                   <template #default="props">
-                    <a
+                    <!-- <a
                       class="btn btn-small btn-primary"
                       href="#"
                       style="margin-right: 5px"
                       >Editar</a
+                    > -->
+                    <el-popconfirm
+                      confirmButtonText="Sim"
+                      cancelButtonText="Não"
+                      icon="el-icon-info"
+                      iconColor="red"
+                      title="Deseja mesmo apagar?"
+                      @confirm="deleteItem(props.row)"
                     >
-                    <a class="btn btn-small btn-danger btn-delete deleteItem"
-                      >Deletar</a
-                    >
+                      <template #reference>
+                        <el-button>Deletar</el-button>
+                      </template>
+                    </el-popconfirm>
                   </template>
                 </el-table-column>
               </el-table>
@@ -238,6 +244,7 @@ export default {
       imagem_musculo: null,
       load: false,
       tableData: [],
+      dadosUpdate: "",
       API: null,
       expandRowKeys: [],
       pages: 1,
@@ -315,7 +322,7 @@ export default {
       getBase64(file)
         .then((result) => {
           this.render = result;
-           this.load = false;
+          this.load = false;
         })
         .catch((e) => console.log("deu erro:", e));
     },
@@ -329,7 +336,7 @@ export default {
       Auth.CadastroMusculo(data)
         .then((r) => {
           console.log(r.data.resultado);
-          if (r.data.resultado === "Musculo cadastrado com sucesso") {
+          if (r.data.resultado === "Músculo cadastrado com sucesso") {
             this.$notify({
               message: "Cadastrado com Sucesso!",
               title: "Sucesso",
@@ -337,7 +344,7 @@ export default {
             });
           } else {
             this.$notify({
-              message: "Equipamento já cadastrado!",
+              message: "Musculo já cadastrado!",
               title: "Falha!",
               type: "Error",
             });
@@ -370,6 +377,26 @@ export default {
         })
         .finally(() => {
           this.load = false;
+        });
+    },
+    setdataEdit(row) {},
+    deleteItem(row) {
+      this.load = true;
+      let data = {
+        id: row.id,
+        tabela: 1,
+      };
+      Auth.deleteItem(data)
+        .then((r) => {
+          this.$notify({
+            message: "Deletado com Sucesso!",
+            title: "Sucesso",
+            type: "success",
+          });
+        })
+        .finally(() => {
+          this.load = false;
+          this.getItens();
         });
     },
   },

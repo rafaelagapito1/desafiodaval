@@ -110,7 +110,7 @@
                     </div>
                   </template>
                 </el-table-column>
-                <!-- <el-table-column label="Imagem">
+                <el-table-column label="Imagem">
                   <template #default="props">
                     <img
                       style="width: 70px"
@@ -118,7 +118,7 @@
                       alt
                     />
                   </template>
-                </el-table-column> -->
+                </el-table-column>
                 <el-table-column label="Nome" prop="nome"></el-table-column>
                 <el-table-column
                   label="Categoria"
@@ -131,15 +131,25 @@
 
                 <el-table-column label="Ações" width="180">
                   <template #default="props">
-                    <a
+                    <!-- <a
                       class="btn btn-small btn-primary"
                       href="#"
                       style="margin-right: 5px"
                       >Editar</a
+                    > -->
+
+                    <el-popconfirm
+                      confirmButtonText="Sim"
+                      cancelButtonText="Não"
+                      icon="el-icon-info"
+                      iconColor="red"
+                      title="Deseja mesmo apagar?"
+                      @confirm="deleteItem(props.row)"
                     >
-                    <a class="btn btn-small btn-danger btn-delete deleteItem"
-                      >Deletar</a
-                    >
+                      <template #reference>
+                        <el-button>Deletar</el-button>
+                      </template>
+                    </el-popconfirm>
                   </template>
                 </el-table-column>
               </el-table>
@@ -319,7 +329,7 @@
                     </Multiselect>
                   </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-4">
                   <br />
                   <p><b>Vídeo do Exercício:</b></p>
                   <label
@@ -348,6 +358,66 @@
                     <b>Nome do Arquivo:</b>
                   </p>
                   <span v-if="name_video">{{ name_video }}</span>
+                </div>
+                <div class="col-md-4">
+                  <br />
+                  <p><b>Imagem do Exercício:</b></p>
+                  <label
+                    for="fileImage2"
+                    style="
+                      background: #204f7f;
+                      color: white;
+                      padding: 1vw;
+                      border-radius: 5px;
+                      margin: 5px 0px 10px 0px;
+                    "
+                    >Escolha o Arquivo</label
+                  >
+
+                  <input
+                    style="display: none"
+                    id="fileImage2"
+                    type="file"
+                    class="form-control form-control-sm mb-2 custom-file-upload"
+                    ref="loadImage2"
+                    accept="image/*"
+                    @change="showFile2()"
+                  />
+                  <br />
+                  <p v-if="name_image">
+                    <b>Nome do Arquivo:</b>
+                  </p>
+                  <span v-if="name_image">{{ name_image }}</span>
+                </div>
+                <div class="col-md-4">
+                  <br />
+                  <p><b>Infográfico:</b></p>
+                  <label
+                    for="fileImage3"
+                    style="
+                      background: #204f7f;
+                      color: white;
+                      padding: 1vw;
+                      border-radius: 5px;
+                      margin: 5px 0px 10px 0px;
+                    "
+                    >Escolha o Arquivo</label
+                  >
+
+                  <input
+                    style="display: none"
+                    id="fileImage3"
+                    type="file"
+                    class="form-control form-control-sm mb-2 custom-file-upload"
+                    ref="loadImage3"
+                    accept="image/*"
+                    @change="showFile3()"
+                  />
+                  <br />
+                  <p v-if="name_infografico">
+                    <b>Nome do Arquivo:</b>
+                  </p>
+                  <span v-if="name_infografico">{{ name_infografico }}</span>
                 </div>
 
                 <div class="col-md-12 text-center">
@@ -403,6 +473,8 @@ export default {
       Musculos: "",
       Equipamento: [],
       Equipamentos: "",
+      render_img: false,
+      render_infografico: false,
       render: false,
       fileImage: null,
       showModal: false,
@@ -419,6 +491,8 @@ export default {
       pages: 1,
       tipo: 1,
       name_video: false,
+      name_image: false,
+      name_infografico: false,
       pagination: {
         perPage: 10,
         currentPage: 1,
@@ -468,6 +542,7 @@ export default {
       else return this.tableDataFiltered.length;
     },
   },
+
   methods: {
     handleExpandChange(row, expandedRows) {
       const id = row.idParaOrganizar;
@@ -497,11 +572,49 @@ export default {
         })
         .catch((e) => console.log("deu erro:", e));
     },
+    showFile2() {
+      this.load = true;
+      var file = this.$refs.loadImage2.files[0];
+      this.name_image = this.$refs.loadImage2.files[0].name;
+      const getBase64 = (file) =>
+        new Promise(function (resolve, reject) {
+          let reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = (error) => reject("Error: ", error);
+        });
+      getBase64(file)
+        .then((result) => {
+          this.render_img = result;
+          this.load = false;
+        })
+        .catch((e) => console.log("deu erro:", e));
+    },
+    showFile3() {
+      this.load = true;
+      var file = this.$refs.loadImage3.files[0];
+      this.name_infografico = this.$refs.loadImage3.files[0].name;
+      const getBase64 = (file) =>
+        new Promise(function (resolve, reject) {
+          let reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = (error) => reject("Error: ", error);
+        });
+      getBase64(file)
+        .then((result) => {
+          this.render_infografico = result;
+          this.load = false;
+        })
+        .catch((e) => console.log("deu erro:", e));
+    },
     SendImage() {
       this.load = true;
       let data = {
         nome: this.nome,
         arquivo: this.render,
+        imagem: this.render_img,
+        infografico: this.render_infografico,
         referencia: this.referencia,
         descricao: this.descricao,
         link: this.link,
@@ -539,6 +652,8 @@ export default {
           this.load = false;
           this.render = false;
           this.nome = "";
+          this.render_img = null;
+          this.render_infografico = null;
           this.render = null;
           this.referencia = "";
           this.descricao = "";
@@ -547,6 +662,8 @@ export default {
           this.Musculo = [];
           this.Equipamento = [];
           this.name_video = false;
+          this.name_image = false;
+          this.name_infografico = false;
           this.getItens();
         });
     },
@@ -600,6 +717,25 @@ export default {
         })
         .finally(() => {
           this.load = false;
+        });
+    },
+    deleteItem(row) {
+      this.load = true;
+      let data = {
+        id: row.id,
+        tabela: 4,
+      };
+      Auth.deleteItem(data)
+        .then((r) => {
+          this.$notify({
+            message: "Deletado com Sucesso!",
+            title: "Sucesso",
+            type: "success",
+          });
+        })
+        .finally(() => {
+          this.load = false;
+          this.getItens();
         });
     },
   },
@@ -917,17 +1053,17 @@ ul li {
   border-radius: 20px 20px 0px 0px;
 }
 .lista-ul li {
-width: auto;
-    background: #2565d9;
-    margin-bottom: 8px;
-    margin-right: 5px;
-    text-align: center;
-    color: white !important;
-    font-weight: bold;
-    border-radius: 20px;
-    padding: 4px 20px;
-    font-size: 11px;
-    margin-top: 5px;
+  width: auto;
+  background: #2565d9;
+  margin-bottom: 8px;
+  margin-right: 5px;
+  text-align: center;
+  color: white !important;
+  font-weight: bold;
+  border-radius: 20px;
+  padding: 4px 20px;
+  font-size: 11px;
+  margin-top: 5px;
 }
 .lista-ul span {
   text-transform: uppercase;

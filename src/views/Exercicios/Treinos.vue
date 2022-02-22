@@ -65,9 +65,9 @@
                 <el-table-column type="expand">
                   <template #default="props">
                     <div class="row content-table">
-                      <div class="col-lg-12 text-left">
+                      <div class="col-lg-12 text-center">
                         <el-button type="success" round @click="open(props.row)"
-                          >Visualizar Treinar</el-button
+                          >Visualizar Treino</el-button
                         >
                       </div>
                     </div>
@@ -86,15 +86,24 @@
 
                 <el-table-column label="Ações" width="180">
                   <template #default="props">
-                    <a
+                    <!-- <a
                       class="btn btn-small btn-primary"
                       href="#"
                       style="margin-right: 5px"
                       >Editar</a
+                    > -->
+                    <el-popconfirm
+                      confirmButtonText="Sim"
+                      cancelButtonText="Não"
+                      icon="el-icon-info"
+                      iconColor="red"
+                      title="Deseja mesmo apagar?"
+                      @confirm="deleteItem(props.row)"
                     >
-                    <a class="btn btn-small btn-danger btn-delete deleteItem"
-                      >Deletar</a
-                    >
+                      <template #reference>
+                        <el-button>Deletar</el-button>
+                      </template>
+                    </el-popconfirm>
                   </template>
                 </el-table-column>
               </el-table>
@@ -176,19 +185,19 @@
                     >
                       <template v-slot:singlelabel="{ value }">
                         <div class="multiselect-single-label">
-                          <!-- <img
+                          <img
                             class="character-label-icon"
                             :src="API + '/' + value.imagem"
-                          /> -->
+                          />
                           {{ value.nome }}
                         </div>
                       </template>
 
                       <template v-slot:option="{ option }">
-                        <!-- <img
+                        <img
                           class="character-option-icon"
                           :src="API + '/' + option.imagem"
-                        /> -->
+                        />
                         {{ option.nome }}
                       </template>
                     </Multiselect>
@@ -385,7 +394,9 @@ export default {
     },
   },
   methods: {
-    open(dados) {},
+    open(dados) {
+      console.log(dados);
+    },
     addMusculo() {
       var obj = {};
       let i = 0;
@@ -411,6 +422,7 @@ export default {
     showFile() {
       this.load = true;
       var file = this.$refs.loadImage.files[0];
+      this.name_video = this.$refs.loadImage.files[0].name;
       const getBase64 = (file) =>
         new Promise(function (resolve, reject) {
           let reader = new FileReader();
@@ -512,6 +524,25 @@ export default {
         })
         .finally(() => {
           this.load = false;
+        });
+    },
+    deleteItem(row) {
+      this.load = true;
+      let data = {
+        id: row.id,
+        tabela: 3,
+      };
+      Auth.deleteItem(data)
+        .then((r) => {
+          this.$notify({
+            message: "Deletado com Sucesso!",
+            title: "Sucesso",
+            type: "success",
+          });
+        })
+        .finally(() => {
+          this.load = false;
+          this.getItens();
         });
     },
   },
@@ -819,6 +850,10 @@ pre {
   .editor_for {
     width: 100%;
     margin-bottom: 215px !important;
+  }
+  .editor {
+    width: 100%;
+    margin-bottom: 115px !important;
   }
 }
 </style>

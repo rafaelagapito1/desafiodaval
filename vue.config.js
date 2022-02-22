@@ -1,5 +1,4 @@
+publicPath: process.env.NODE_ENV === 'production'
 module.exports = {
-    devServer: {
-      proxy: 'http://localhost'
-    }
-  }
+  publicPath: process.env.NODE_ENV === 'production' ? '/gerenciador/' : '/'
+}
