@@ -202,7 +202,7 @@
         <div class="col-lg-8 d-none d-lg-block">
           <p class="sidebar-relative">
             Bem vinda, <b>Val!</b>
-            <a href="../controller/logout.php" class="sidebar-logout"
+            <a href="#" class="sidebar-logout"
               ><i class="dripicons-exit"></i
             ></a>
           </p>
