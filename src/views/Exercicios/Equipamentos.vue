@@ -86,11 +86,18 @@
                       style="margin-right: 5px"
                       >Editar</a
                     > -->
-                    <a
-                      class="btn btn-small btn-danger btn-delete deleteItem"
-                      @click.prevent="deleteItem(props.row)"
-                      >Deletar</a
+                    <el-popconfirm
+                      confirmButtonText="Sim"
+                      cancelButtonText="Não"
+                      icon="el-icon-info"
+                      iconColor="red"
+                      title="Deseja mesmo apagar?"
+                      @confirm="deleteItem(props.row)"
                     >
+                      <template #reference>
+                        <el-button>Deletar</el-button>
+                      </template>
+                    </el-popconfirm>
                   </template>
                 </el-table-column>
               </el-table>
@@ -338,6 +345,7 @@ export default {
           this.render = false;
           this.nome_musculo = null;
           this.getItens();
+          this.pages = 1;
         });
     },
     getItens() {

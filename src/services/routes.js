@@ -51,46 +51,46 @@ const Auth = {
 	},
 
 	async CadastroMusculo(data) {
-		return await axios.post(defaultW + '/cadastro_musculo', data);
+		return await axios.post(defaultW + '/cadastro_musculo.php', data);
 	},
 	async CadastroEquipamento(data) {
-		return await axios.post(defaultW + '/cadastro_equipamento', data);
+		return await axios.post(defaultW + '/cadastro_equipamento.php', data);
 	},
 	async CadastroCategoria(data) {
-		return await axios.post(defaultW + '/cadastro_categoria', data);
+		return await axios.post(defaultW + '/cadastro_categoria.php', data);
 	},
 	async CadastroExercicio(data) {
-		return await axios.post(defaultW + '/cadastro_exercicio', data);
+		return await axios.post(defaultW + '/cadastro_exercicio.php', data);
 	},
 	async CadastroTreino(data) {
-		return await axios.post(defaultW + '/cadastro_treino', data);
+		return await axios.post(defaultW + '/cadastro_treino.php', data);
 	},
 	
 	async getCategoria() {
-		return await axios.post(defaultW + '/lista_categorias', {
+		return await axios.post(defaultW + '/lista_categorias.php', {
 			id: 0,
 		});
 	},
 	async deleteItem(data) {
-		return await axios.post(defaultW + '/delete', data);
+		return await axios.post(defaultW + '/delete.php', data);
 	},
 	async getMusculo() {
-		return await axios.post(defaultW + '/lista_musculos', {
+		return await axios.post(defaultW + '/lista_musculos.php', {
 			id: 0,
 		});
 	},
 	async getEquipamento() {
-		return await axios.post(defaultW + '/lista_equipamentos', {
+		return await axios.post(defaultW + '/lista_equipamentos.php', {
 			id: 0,
 		});
 	},
 	async getExercicios() {
-		return await axios.post(defaultW + '/lista_exercicios', {
+		return await axios.post(defaultW + '/lista_exercicios.php', {
 			id: 0,
 		});
 	},
 	async getTreinos() {
-		return await axios.post(defaultW + '/lista_treinos', {
+		return await axios.post(defaultW + '/lista_treinos.php', {
 			id: 0,
 		});
 	},

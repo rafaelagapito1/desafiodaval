@@ -4,7 +4,7 @@ const env = {
   NAME: "Multilevel Network System",
   VUE_SESSION_TIMEOUT: 60,
   WS: {
-    URL: "http://localhost/api/desafiodaval",
+    URL: "https://desafiodaval.com.br/api_indutiva",
     //  URL: "localhost", 
   }
 }

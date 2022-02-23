@@ -178,6 +178,8 @@
                   <p><b>Exercícios </b></p>
                   <div>
                     <Multiselect
+                    searchable
+                      noResultsText="Nenhum resultado encontrado!"
                       v-model="value"
                       placeholder="Escolha os Exercícios"
                       label="id"
@@ -227,6 +229,15 @@
                       <p>
                         <span>{{ index + 1 + "°  " }}</span>
                         <b>Sets e Repetições: {{ item.nome }}</b>
+                        <i
+                          style="
+                            cursor: pointer;
+                            color: #890101;
+                            margin-left: 10px;
+                          "
+                          class="fa fa-trash"
+                          @click.prevent="exclude(index)"
+                        ></i>
                       </p>
                       <QuillEditor
                         v-model:content="item.descricao"
@@ -476,6 +487,7 @@ export default {
           this.load = false;
           this.render = false;
           this.getItens();
+          this.pages = 1;
         });
     },
     getItens() {
@@ -544,6 +556,10 @@ export default {
           this.load = false;
           this.getItens();
         });
+    },
+    exclude(index) {
+      let products = this.MusculosSelecionados;
+      products.splice(index, 1);
     },
   },
   mounted() {},

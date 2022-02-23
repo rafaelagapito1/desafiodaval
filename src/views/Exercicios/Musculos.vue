@@ -75,6 +75,7 @@
                   </template>
                 </el-table-column>
                 <el-table-column label="Nome" prop="nome"></el-table-column>
+              
                 <el-table-column label="Ações" width="180">
                   <template #default="props">
                     <!-- <a
@@ -146,17 +147,8 @@
                   ></el-input>
                 </div>
                 <br />
-                <div class="col-md-12">
-                  <span>Tipo de Músculo</span><br />
-                  <el-radio-group v-model="tipo">
-                    <el-radio-button label="1" value="1"
-                      >Primário</el-radio-button
-                    >
-                    <el-radio-button label="2" value="2"
-                      >Secundário</el-radio-button
-                    >
-                  </el-radio-group>
-                </div>
+        
+        
                 <div class="col-md-12">
                   <br />
                   <span>Imagem do Músculo</span>
@@ -363,6 +355,7 @@ export default {
           this.render = false;
           this.nome_musculo = null;
           this.getItens();
+          this.pages = 1;
         });
     },
     getItens() {

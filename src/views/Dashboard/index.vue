@@ -1,6 +1,6 @@
 <template>
   <Header></Header>
-  <section class="page-container">
+  <section class="page-container" v-loading="load">
     <div class="page-content-wrapper">
       <!--Main Content-->
       <div class="content sm-gutter">
@@ -68,7 +68,7 @@
             </div>
 
             <div class="col-12 col-md-6 col-lg-6">
-              <div class="block table-block mb-4">
+              <div class="block table-block mb-4" >
                 <div
                   class="block-heading d-flex align-items-center"
                   style="border: 0; padding-bottom: 0"
@@ -109,17 +109,23 @@
                           <tbody class="text-middle">
                             <tr v-for="(item, index) in Musculos.slice(0, 5)">
                               <td class="product">
-                                <img class="product-img mCS_img_loaded" />
+                                <img
+                                  class="product-img mCS_img_loaded"
+                                  :src="API + '/' + item.imagem"
+                                  alt
+                                />
                               </td>
                               <td class="name">
                                 <span class="span-title">{{ item.nome }}</span>
                               </td>
                               <td class="price price-td-home">
-                                <a><i class="fa fa-cog a-i-color"></i></a>
                                 <a
                                   style="cursor: pointer"
-                                  onclick="alertdelete_e19();"
-                                  ><i class="fa fa-trash-o a-i-color"></i
+                                  @click.prevent="deleteItem(item, 4)"
+                                  ><i
+                                    class="fa fa-trash"
+                                    style="cursor: pointer"
+                                  ></i
                                 ></a>
                               </td>
                             </tr>
@@ -202,17 +208,20 @@
                           <tbody class="text-middle">
                             <tr v-for="(item, index) in tableData.slice(0, 5)">
                               <td class="product">
-                                <img class="product-img mCS_img_loaded" />
+                                <img
+                                  class="product-img mCS_img_loaded"
+                                  :src="API + '/' + item.imagem"
+                                  alt
+                                />
                               </td>
                               <td class="name">
                                 <span class="span-title">{{ item.nome }}</span>
                               </td>
                               <td class="price price-td-home">
-                                <a><i class="fa fa-cog a-i-color"></i></a>
                                 <a
                                   style="cursor: pointer"
-                                  onclick="alertdelete_e19();"
-                                  ><i class="fa fa-trash-o a-i-color"></i
+                                  @click.prevent="deleteItem(item, 3)"
+                                  ><i class="fa fa-trash"></i
                                 ></a>
                               </td>
                             </tr>
@@ -292,20 +301,23 @@
                     >
                       <div class="table-responsive text-no-wrap">
                         <table class="table">
-                             <tbody class="text-middle">
+                          <tbody class="text-middle">
                             <tr v-for="(item, index) in Musculo.slice(0, 5)">
                               <td class="product">
-                                <img class="product-img mCS_img_loaded" />
+                                <img
+                                  class="product-img mCS_img_loaded"
+                                  :src="API + '/' + item.imagem"
+                                  alt
+                                />
                               </td>
                               <td class="name">
                                 <span class="span-title">{{ item.nome }}</span>
                               </td>
                               <td class="price price-td-home">
-                                <a><i class="fa fa-cog a-i-color"></i></a>
                                 <a
                                   style="cursor: pointer"
-                                  onclick="alertdelete_e19();"
-                                  ><i class="fa fa-trash-o a-i-color"></i
+                                  @click.prevent="deleteItem(item, 1)"
+                                  ><i class="fa fa-trash"></i
                                 ></a>
                               </td>
                             </tr>
@@ -385,20 +397,27 @@
                     >
                       <div class="table-responsive text-no-wrap">
                         <table class="table">
-                           <tbody class="text-middle">
-                            <tr v-for="(item, index) in Equipamentos.slice(0, 5)">
+                          <tbody class="text-middle">
+                            <tr
+                              v-for="(item, index) in Equipamentos.slice(0, 5)"
+                            >
                               <td class="product">
-                                <img class="product-img mCS_img_loaded" />
+                                <img
+                                  class="product-img mCS_img_loaded"
+                                  :src="API + '/' + item.imagem_equipamento"
+                                  alt
+                                />
                               </td>
                               <td class="name">
-                                <span class="span-title">{{ item.nome_equipamento }}</span>
+                                <span class="span-title">{{
+                                  item.nome_equipamento
+                                }}</span>
                               </td>
                               <td class="price price-td-home">
-                                <a><i class="fa fa-cog a-i-color"></i></a>
                                 <a
                                   style="cursor: pointer"
-                                  onclick="alertdelete_e19();"
-                                  ><i class="fa fa-trash-o a-i-color"></i
+                                  @click.prevent="deleteItem(item, 3)"
+                                  ><i class="fa fa-trash"></i
                                 ></a>
                               </td>
                             </tr>
@@ -594,6 +613,29 @@ export default {
         })
         .finally(() => {
           this.load = false;
+        });
+    },
+    deleteItem(row, index) {
+      this.load = true;
+      let data = {
+        id: row.id,
+        tabela: index,
+      };
+      Auth.deleteItem(data)
+        .then((r) => {
+          this.$notify({
+            message: "Deletado com Sucesso!",
+            title: "Sucesso",
+            type: "success",
+          });
+        })
+        .finally(() => {
+          this.load = false;
+          this.getItens();
+          this.getCategorias();
+          this.getExercicios();
+          this.getEquipamentos();
+          this.getMusculos();
         });
     },
   },

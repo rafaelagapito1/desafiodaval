@@ -1,7 +1,7 @@
 <template>
-  <nav id="navigation" class="navigation-sidebar bg-primary" v-if="toggle">
+  <nav id="navigation" :class="'navigation-sidebar bg-primary ' + classe">
     <div class="navigation-header">
-      <a href="#"   @click.prevent="goTO('/dashboard')"
+      <a href="#" @click.prevent="goTO('/dashboard')"
         ><img
           src="../../assets/images/logovalwhite.png"
           style="max-width: 70px"
@@ -10,9 +10,7 @@
 
     <div class="welcome">
       Bem vinda, <b>Val!</b>
-      <a href="#" class="sidebar-user"
-        ><i class="dripicons-exit"></i
-      ></a>
+      <a href="#" class="sidebar-user"><i class="dripicons-exit"></i></a>
     </div>
 
     <!--Navigation Menu Links-->
@@ -52,7 +50,7 @@
             </li>
 
             <li>
-              <a href="#" class="have-submenu"   @click.prevent="goTO('/Treino')">
+              <a href="#" class="have-submenu" @click.prevent="goTO('/Treino')">
                 <span class="icon-thumbnail"
                   ><i class="dripicons-to-do"></i
                 ></span>
@@ -215,10 +213,10 @@
 export default {
   methods: {
     on() {
-      this.toggle = true;
+      this.classe = "show";
     },
     off() {
-      this.toggle = false;
+      this.classe = "";
     },
     goTO(url) {
       this.$router.push(url);
@@ -239,6 +237,7 @@ export default {
 
   data() {
     return {
+      classe: "",
       toggle: true,
     };
   },
@@ -250,12 +249,23 @@ export default {
   display: none;
   z-index: 999;
 }
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 991px) {
   .navigation-sidebar {
-    width: 300px;
+    display: none;
+  }
+  .show {
+    display: block;
   }
   .x {
     display: block;
+  }
+}
+@media screen and (max-width: 680px) {
+  .navigation-sidebar {
+    display: none;
+  }
+  .navigation-sidebar {
+    width: 300px;
   }
 }
 </style>

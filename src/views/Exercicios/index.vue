@@ -92,7 +92,10 @@
                             v-for="item in props.row.musculos"
                             :key="item.nome"
                           >
-                            <span> {{ item.nome }}</span>
+                            <span>
+                              {{ item.nome + " "
+                              }}<sup>{{ item.tipo + "°" }}</sup></span
+                            >
                           </li>
                         </ul>
                       </div>
@@ -246,28 +249,25 @@
                     </el-option>
                   </el-select>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-9">
                   <br />
                   <p><b>Músculos </b></p>
-
                   <div>
                     <Multiselect
-                      v-model="Musculo"
-                      mode="tags"
-                      placeholder="Escolha os Musculos"
-                      track-by="nome"
-                      label="nome"
-                      :close-on-select="false"
-                      :search="true"
+                      searchable
+                      noResultsText="Nenhum resultado encontrado!"
+                      v-model="value"
+                      placeholder="Escolha os Músculos"
+                      label="id"
                       :options="Musculos"
                     >
                       <template v-slot:singlelabel="{ value }">
                         <div class="multiselect-single-label">
                           <img
-                            class="character-option-icon"
+                            class="character-label-icon"
                             :src="API + '/' + value.imagem"
                           />
-                          {{ value.nome + " " + value.tipo + "°" }}
+                          {{ value.nome }}
                         </div>
                       </template>
 
@@ -276,23 +276,65 @@
                           class="character-option-icon"
                           :src="API + '/' + option.imagem"
                         />
-                        {{ option.nome + " " + option.tipo + "°" }}
-                        <span
-                          v-if="!disabled"
-                          class="multiselect-tag-remove"
-                          @mousedown.prevent="handleTagRemove(option, $event)"
-                        >
-                          <span class="multiselect-tag-remove-icon"></span>
-                        </span>
+                        {{ option.nome }}
                       </template>
                     </Multiselect>
                   </div>
                 </div>
+                <div class="col-md-3 text-center">
+                  <br /><br />
+                  <button
+                    @click.prevent="addMusculo()"
+                    style="background: #19ad39; border: 1px solid #19ad39"
+                    class="btn btn-secondary ml-3"
+                  >
+                    <i class="el-icon-plus"></i>
+                    Adicionar
+                  </button>
+                </div>
+                <div class="col-md-12" v-if="MusculosSelecionados != []">
+                  <br />
+                  <b>Músculos Escolhidos</b><br /><br />
+                  <div class="row">
+                    <div
+                      class="col-md-4 editor_for"
+                      style="margin-bottom: 20px"
+                      v-for="(item, index) in MusculosSelecionados"
+                      :key="index"
+                    >
+                      <p>
+                        <span>{{ index + 1 + "°  " }}</span>
+                        <b>Músculo: {{ item.nome }}</b>
+                        <i
+                          style="
+                            cursor: pointer;
+                            color: #890101;
+                            margin-left: 10px;
+                          "
+                          class="fa fa-trash"
+                          @click.prevent="exclude(index)"
+                        ></i>
+                      </p>
+                      <br />
+                      <el-radio-group v-model="item.tipo">
+                        <el-radio-button label="1" value="1"
+                          >Primário</el-radio-button
+                        >
+                        <el-radio-button label="2" value="2"
+                          >Secundário</el-radio-button
+                        >
+                      </el-radio-group>
+                    </div>
+                  </div>
+                </div>
+
                 <div class="col-md-6">
                   <br />
                   <p><b>Equipamentos </b></p>
                   <div>
                     <Multiselect
+                      searchable
+                      noResultsText="Nenhum resultado encontrado!"
                       v-model="Equipamento"
                       mode="tags"
                       placeholder="Escolha os Equipamentos"
@@ -329,7 +371,7 @@
                     </Multiselect>
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <br />
                   <p><b>Vídeo do Exercício:</b></p>
                   <label
@@ -340,9 +382,12 @@
                       padding: 1vw;
                       border-radius: 5px;
                       margin: 5px 0px 10px 0px;
+                      width: 100%;
+                      text-align: center;
+                      cursor: pointer;
                     "
-                    >Escolha o Arquivo</label
-                  >
+                    >Escolha o Arquivo <i class="el-icon-upload"></i
+                  ></label>
 
                   <input
                     style="display: none"
@@ -359,7 +404,7 @@
                   </p>
                   <span v-if="name_video">{{ name_video }}</span>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <br />
                   <p><b>Imagem do Exercício:</b></p>
                   <label
@@ -370,9 +415,12 @@
                       padding: 1vw;
                       border-radius: 5px;
                       margin: 5px 0px 10px 0px;
+                      width: 100%;
+                      text-align: center;
+                      cursor: pointer;
                     "
-                    >Escolha o Arquivo</label
-                  >
+                    >Escolha o Arquivo <i class="el-icon-upload"></i
+                  ></label>
 
                   <input
                     style="display: none"
@@ -389,7 +437,7 @@
                   </p>
                   <span v-if="name_image">{{ name_image }}</span>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <br />
                   <p><b>Infográfico:</b></p>
                   <label
@@ -400,9 +448,12 @@
                       padding: 1vw;
                       border-radius: 5px;
                       margin: 5px 0px 10px 0px;
+                      width: 100%;
+                      text-align: center;
+                      cursor: pointer;
                     "
-                    >Escolha o Arquivo</label
-                  >
+                    >Escolha o Arquivo <i class="el-icon-upload"></i
+                  ></label>
 
                   <input
                     style="display: none"
@@ -466,6 +517,8 @@ export default {
   components: { Header, Multiselect, QuillEditor },
   data() {
     return {
+      MusculosSelecionados: [],
+      value: [],
       link: "",
       categoria: "",
       categorias: "",
@@ -544,6 +597,19 @@ export default {
   },
 
   methods: {
+    addMusculo() {
+      var obj = {};
+      let i = 0;
+      for (; i <= this.Musculos.length - 1; i++) {
+        if (this.Musculos[i].nome === this.value) {
+          obj.id = this.Musculos[i].id;
+          obj.nome = this.Musculos[i].nome;
+          obj.tipo = 1;
+        }
+      }
+      this.MusculosSelecionados.push(obj);
+    },
+
     handleExpandChange(row, expandedRows) {
       const id = row.idParaOrganizar;
       const lastId = this.expandRowKeys[0];
@@ -619,7 +685,7 @@ export default {
         descricao: this.descricao,
         link: this.link,
         categoria: this.categoria,
-        musculos: this.Musculo,
+        musculos: this.MusculosSelecionados,
         equipamentos: this.Equipamento,
       };
       console.log(data);
@@ -659,12 +725,13 @@ export default {
           this.descricao = "";
           this.link = "";
           this.categoria = [];
-          this.Musculo = [];
+          this.MusculosSelecionados = [];
           this.Equipamento = [];
           this.name_video = false;
           this.name_image = false;
           this.name_infografico = false;
           this.getItens();
+          this.pages = 1;
         });
     },
     getItens() {
@@ -718,6 +785,10 @@ export default {
         .finally(() => {
           this.load = false;
         });
+    },
+    exclude(index) {
+      let products = this.MusculosSelecionados;
+      products.splice(index, 1);
     },
     deleteItem(row) {
       this.load = true;
