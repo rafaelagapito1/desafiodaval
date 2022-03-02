@@ -25,9 +25,4 @@ import VueGtag from "vue-gtag-next";
 import VueTheMask from 'vue-the-mask'
 
 
-
 createApp(App).use(maska).use(VueTheMask).use(PrimeVue).use(VueLodash).use(store).use(router).use(VueAxios, axios).use(ElementPlus).use(VueFinalModal(), { componentName: 'VueFinalModal', key: '$vfm', dynamicContainerName: 'ModalsContainer' }).use(VueGtag, { property: { id: "G-E6ELE0N03N" } }).mount('#app')
-
-
-
-

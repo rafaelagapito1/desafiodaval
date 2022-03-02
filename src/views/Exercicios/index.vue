@@ -203,7 +203,11 @@
                 </div>
                 <div class="col-12 col-md-6">
                   <p><b>Referência</b></p>
-                  <el-input placeholder="" v-model="referencia"></el-input>
+                  <el-input
+                    placeholder=""
+                    v-model="referencia"
+                    @blur="verifica()"
+                  ></el-input>
                 </div>
                 <br />
                 <div class="col-12 editor">
@@ -258,7 +262,7 @@
                       noResultsText="Nenhum resultado encontrado!"
                       v-model="value"
                       placeholder="Escolha os Músculos"
-                      label="id"
+                      label="nome"
                       :options="Musculos"
                     >
                       <template v-slot:singlelabel="{ value }">
@@ -789,6 +793,25 @@ export default {
     exclude(index) {
       let products = this.MusculosSelecionados;
       products.splice(index, 1);
+    },
+    verifica() {
+      let data = {
+        id: this.referencia,
+      };
+      Auth.verificaReferencia(data)
+        .then((r) => {
+          if (r.data.resultado === 1) {
+            this.referencia = '';
+            this.$notify({
+              message: "Referência já utilizada!",
+              title: "Erro",
+              type: "danger",
+            });
+          }
+        })
+        .finally(() => {
+          this.load = false;
+        });
     },
     deleteItem(row) {
       this.load = true;

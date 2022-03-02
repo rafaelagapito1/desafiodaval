@@ -267,5 +267,8 @@ export default {
   .navigation-sidebar {
     width: 300px;
   }
+  .show {
+    display: block;
+  }
 }
 </style>

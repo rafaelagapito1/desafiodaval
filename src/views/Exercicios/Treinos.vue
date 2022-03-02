@@ -182,7 +182,7 @@
                       noResultsText="Nenhum resultado encontrado!"
                       v-model="value"
                       placeholder="Escolha os Exercícios"
-                      label="id"
+                      label="nome"
                       :options="Musculos"
                     >
                       <template v-slot:singlelabel="{ value }">

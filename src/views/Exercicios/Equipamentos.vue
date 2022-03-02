@@ -78,7 +78,7 @@
                   label="Nome"
                   prop="nome_equipamento"
                 ></el-table-column>
-                <el-table-column label="Ações">
+                <el-table-column label="Ações" width="180">
                   <template #default="props">
                     <!-- <a
                       class="btn btn-small btn-primary"

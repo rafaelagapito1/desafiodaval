@@ -68,7 +68,7 @@
             </div>
 
             <div class="col-12 col-md-6 col-lg-6">
-              <div class="block table-block mb-4" >
+              <div class="block table-block mb-4">
                 <div
                   class="block-heading d-flex align-items-center"
                   style="border: 0; padding-bottom: 0"
@@ -462,6 +462,7 @@
       </div>
     </div>
   </section>
+
 </template>
 
 <script>
@@ -475,11 +476,14 @@ import lodash from "lodash";
 import Multiselect from "@vueform/multiselect";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import Vue3Html2pdf from "vue3-html2pdf";
+import html2pdf from "html2pdf.js"
 export default {
   name: "Home",
-  components: { Header, Multiselect, QuillEditor },
+  components: { Header, Multiselect, QuillEditor, Vue3Html2pdf },
   data() {
     return {
+ 
       MusculosSelecionados: [],
       value: [],
       descricao: "",
@@ -554,6 +558,7 @@ export default {
     },
   },
   methods: {
+ 
     getItens() {
       this.load = true;
       Auth.getTreinos()
