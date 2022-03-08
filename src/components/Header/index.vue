@@ -105,35 +105,17 @@
                 <span class="title">Receitas</span>
               </a>
             </li>
-
+            
             <li>
-              <a href="javascript:void(0);" class="have-submenu">
+              <a href="javascript:void(0);" class="have-submenu"        @click.prevent="goTO('/tokens')">
                 <span class="icon-thumbnail"
-                  ><i class="dripicons-article"></i
+                  ><i class="dripicons-view-list"></i
                 ></span>
-                <span class="title">Posts</span>
+                <span class="title">Tokens</span>
               </a>
-              <!--Submenu-->
-              <ul class="sub-menu" style="display: ">
-                <li>
-                  <a href="../controller/posts.php">
-                    <span class="icon-thumbnail"
-                      ><i class="dripicons-dot"></i
-                    ></span>
-                    <span class="title">Show All</span>
-                  </a>
-                </li>
-
-                <li>
-                  <a href="../controller/new_post.php">
-                    <span class="icon-thumbnail"
-                      ><i class="dripicons-dot"></i
-                    ></span>
-                    <span class="title">New Post</span>
-                  </a>
-                </li>
-              </ul>
             </li>
+
+          
           </div>
           <div
             id="mCSB_1_scrollbar_vertical"

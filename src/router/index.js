@@ -8,6 +8,8 @@ const Equipamentos = () => import('../views/Exercicios/Equipamentos.vue')
 const Categoria = () => import('../views/Exercicios/Categorias.vue')
 const Musculos = () => import('../views/Exercicios/Musculos')
 const Treinos = () => import('../views/Exercicios/Treinos.vue')
+const Tokens = () => import('../views/Exercicios/Tokens.vue')
+
 
 const routes = [
 
@@ -20,6 +22,11 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard
+  },
+  {
+    path: '/tokens',
+    name: 'Tokens',
+    component: Tokens
   },
   {
     path: '/treino',
