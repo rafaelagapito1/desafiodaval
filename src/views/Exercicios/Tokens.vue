@@ -51,7 +51,7 @@
             </div>
 
             <div class="block table-block mb-4" style="margin-top: 20px">
-                 <h4>Tokens Disponíveis</h4>
+              <h4>Tokens Disponíveis</h4>
               <el-table
                 v-if="tableData.length != 0"
                 :data="queriedData"
@@ -70,10 +70,20 @@
                   prop="id"
                   width="100"
                 ></el-table-column>
-                <el-table-column
-                  label="Token"
-                  prop="categoria"
-                ></el-table-column>
+                <el-table-column label="Token" prop="token"></el-table-column>
+                <el-table-column label="Status">
+                  Disponível</el-table-column
+                >
+                <el-table-column label="ativo">
+                  <template #default="props">
+                    <el-button
+                      type="primary"
+                      round
+                      @click.prevent="atualizaTokens(props.row)"
+                      >Pegar Token</el-button
+                    >
+                  </template>
+                </el-table-column>
               </el-table>
               <div class="row mt-3">
                 <div class="col-md-12">
@@ -288,14 +298,43 @@ export default {
           this.pages = 1;
         });
     },
+    atualizaTokens(row) {
+      navigator.clipboard
+        .writeText(row.token)
+        .then(() => {
+          Swal.fire("Copiado com sucesso!");
+          let data = {
+            id: row.id,
+          };
+          Auth.atualizaTokens(data)
+            .then((r) => {
+              console.log(r);
+            })
+            .finally(() => {
+              this.load = false;
+              this.getItens();
+            });
+        })
+        .catch((err) => {
+          console.log("Algo deu errado", err);
+        });
+    },
     getItens() {
       this.load = true;
-      Auth.getCategoria()
+      Auth.getAllTokens()
         .then((r) => {
-          this.tableData = r.data.categorias.reverse();
+          this.tableData = r.data.sabotadores_tokens.reverse();
+          let dados = [];
+
           let i = 0;
           for (; i <= this.tableData.length - 1; i++) {
-            this.tableData[i].idParaOrganizar = i;
+            if (this.tableData[i].admin_status === "1")
+              dados.push(this.tableData[i]);
+          }
+          this.tableData = dados;
+          let g = 0;
+          for (; g <= this.tableData.length - 1; g++) {
+            this.tableData[g].idParaOrganizar = g;
           }
         })
         .finally(() => {
@@ -390,7 +429,7 @@ export default {
 
 <style>
 .el-notification .el-icon-success {
-    color: green;
+  color: green;
 }
 </style>
 

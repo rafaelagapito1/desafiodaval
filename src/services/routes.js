@@ -84,6 +84,14 @@ const Auth = {
 			id: 0,
 		});
 	},
+	async getAllTokens() {
+		return await axios.post(defaultW + '/lista_tokens.php', {
+			id: 0,
+		});
+	},
+	async atualizaTokens(data) {
+		return await axios.post(defaultW + '/atualiza_token_adm.php', data);
+	},
 	async getExercicios() {
 		return await axios.post(defaultW + '/lista_exercicios.php', {
 			id: 0,
