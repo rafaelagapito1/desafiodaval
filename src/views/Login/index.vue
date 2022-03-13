@@ -55,7 +55,7 @@ export default {
       this.$router.push(url);
     },
     userLogin() {
-      const data = {
+      let data = {
         email: this.dataLogin.EMAIL,
         senha: this.dataLogin.PASSWORD,
       };
@@ -74,18 +74,17 @@ export default {
       if (this.validPass === false && this.validEmail === false) {
         this.load = true;
 
-        fetch(this.API + "/login.php", {
-          method: "POST",
-          body: JSON.stringify(data),
-        })
+        Auth.login(data)
           .then((r) => {
-            if (r.status === 200) {
+            if (r.data.resultado !== false) {
               this.$notify.success({
                 title: "Sucesso",
                 message: "Seja Bem Vinda Val! ",
                 offset: 120,
                 duration: 3000,
               });
+              localStorage.setItem("id", r.data.id);
+              localStorage.setItem("token", r.data.token);
               this.$router.push("/dashboard");
             } else {
               this.$message({

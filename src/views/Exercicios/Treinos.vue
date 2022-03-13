@@ -66,9 +66,20 @@
                   <template #default="props">
                     <div class="row content-table">
                       <div class="col-lg-12 text-center">
-                        <el-button type="success" round @click="open(props.row)"
-                          >Visualizar Treino</el-button
-                        >
+                        <el-button
+                          v-if="props.row.exercicios.length == 6"
+                          type="success"
+                          round
+                          @click="generate6(props.row)"
+                          >Baixar Treino
+                        </el-button>
+                        <el-button
+                          v-if="props.row.exercicios.length == 8"
+                          type="success"
+                          round
+                          @click="generate8(props.row)"
+                          >Baixar Treino
+                        </el-button>
                       </div>
                     </div>
                   </template>
@@ -158,19 +169,11 @@
                   <p>
                     <b>Descrição </b>
                   </p>
-                  <QuillEditor
-                    v-model:content="descricao"
-                    content-type="html"
-                    :modules="modules"
-                    toolbar="full"
-                    theme="snow"
-                  />
+
+                  <el-input v-model="descricao" type="textarea"></el-input>
                 </div>
                 <div class="col-12">
-                  <br />
-                  <br />
-                  <br />
-                  <br />
+               
                 </div>
 
                 <div class="col-md-9">
@@ -178,7 +181,7 @@
                   <p><b>Exercícios </b></p>
                   <div>
                     <Multiselect
-                    searchable
+                      searchable
                       noResultsText="Nenhum resultado encontrado!"
                       v-model="value"
                       placeholder="Escolha os Exercícios"
@@ -222,7 +225,6 @@
                   <div class="row">
                     <div
                       class="col-md-12 editor_for"
-                      style="margin-bottom: 100px"
                       v-for="(item, index) in MusculosSelecionados"
                       :key="index"
                     >
@@ -239,13 +241,10 @@
                           @click.prevent="exclude(index)"
                         ></i>
                       </p>
-                      <QuillEditor
-                        v-model:content="item.descricao"
-                        content-type="html"
-                        :modules="modules"
-                        toolbar="full"
-                        theme="snow"
-                      />
+                      <el-input
+                        v-model="item.descricao"
+                        type="textarea"
+                      ></el-input>
                       <br /><br />
                     </div>
                   </div>
@@ -312,6 +311,25 @@
         </div>
       </div>
     </div>
+
+    <div v-if="seis" style="display: none">
+      <iframe
+        :src="
+          'https://desafiodaval.com.br/api_pdf/treino_6/index.html?dados=' +
+          dadosSend
+        "
+        frameborder="0"
+      ></iframe>
+    </div>
+    <div v-if="oito" style="display: none">
+      <iframe
+        :src="
+          'https://desafiodaval.com.br/api_pdf/treino_8/index.html?dados=' +
+          dadosSend
+        "
+        frameborder="0"
+      ></iframe>
+    </div>
   </section>
 </template>
 
@@ -325,12 +343,15 @@ import Header from "../../components/Header/index.vue";
 import lodash from "lodash";
 import Multiselect from "@vueform/multiselect";
 import { QuillEditor } from "@vueup/vue-quill";
+import { Base64 } from "js-base64";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 export default {
   name: "Home",
   components: { Header, Multiselect, QuillEditor },
   data() {
     return {
+      oito: false,
+      seis: false,
       MusculosSelecionados: [],
       value: [],
       descricao: "",
@@ -405,6 +426,40 @@ export default {
     },
   },
   methods: {
+    generate6(dados) {
+      this.load = true;
+      let treino = {
+        nome: "Valeria Buoy",
+        foto: null,
+        treino: dados,
+      };
+      var dadosTable = JSON.stringify(treino);
+      var encodedString = Base64.encode(dadosTable);
+      this.dadosSend = encodedString;
+      console.log(encodedString);
+      this.seis = true;
+      setTimeout(() => {
+        this.load = false;
+        this.seis = false;
+      }, 3000);
+    },
+    generate8(dados) {
+      this.load = true;
+      let treino = {
+        nome: "Valeria Buoy",
+        foto: null,
+        treino: dados,
+      };
+      var dadosTable = JSON.stringify(treino);
+      var encodedString = Base64.encode(dadosTable);
+      this.dadosSend = encodedString;
+      console.log(encodedString);
+      this.oito = true;
+      setTimeout(() => {
+        this.load = false;
+        this.oito = false;
+      }, 3000);
+    },
     open(dados) {
       console.log(dados);
     },
@@ -444,7 +499,6 @@ export default {
       getBase64(file)
         .then((result) => {
           this.render = result;
-          console.log(result);
           this.load = false;
         })
         .catch((e) => console.log("deu erro:", e));
@@ -452,24 +506,34 @@ export default {
     SendImage() {
       this.load = true;
       let data = {
+        id: localStorage.getItem("id"),
+        token: localStorage.getItem("token"),
         nome: this.nome,
         imagem: this.render,
         descricao: this.descricao,
         exercicios: this.MusculosSelecionados,
       };
-      console.log(data);
       Auth.CadastroTreino(data)
         .then((r) => {
-          console.log(r.data.resultado);
-          if (r.data.resultado === "Treino cadastrado com sucesso") {
+          if (r.data.resultado === false) {
+            this.$notify({
+              message: "Login Expirado",
+              title: "Falha!",
+              type: "Error",
+            });
+            Auth.logout();
+          }
+          if (r.data.resultado === "Treino Cadastrado") {
             this.$notify({
               message: "Cadastrado com Sucesso!",
               title: "Sucesso",
               type: "success",
             });
+            this.pages = 1;
+            this.render = false;
           } else {
             this.$notify({
-              message: "Equipamento já cadastrado!",
+              message: "Algo deu errado",
               title: "Falha!",
               type: "Error",
             });
@@ -485,9 +549,7 @@ export default {
         .finally(() => {
           this.showModal = false;
           this.load = false;
-          this.render = false;
           this.getItens();
-          this.pages = 1;
         });
     },
     getItens() {
@@ -865,11 +927,11 @@ pre {
 @media screen and (max-width: 780px) {
   .editor_for {
     width: 100%;
-    margin-bottom: 215px !important;
+    margin-bottom: 15px !important;
   }
   .editor {
     width: 100%;
-    margin-bottom: 115px !important;
+    margin-bottom: 15px !important;
   }
 }
 </style>

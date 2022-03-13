@@ -215,20 +215,12 @@
                   <p>
                     <b>Descrição </b>
                   </p>
-                  <QuillEditor
-                    v-model:content="descricao"
-                    content-type="html"
-                    :modules="modules"
-                    toolbar="full"
-                    theme="snow"
-                  />
+      
+                     <el-input v-model="descricao" type="textarea"></el-input>
                 </div>
                 <div class="col-12">
                   <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
+           
                 </div>
                 <div class="col-md-6">
                   <p><b>Link Youtube</b></p>
@@ -1175,7 +1167,7 @@ ul li {
 
 @media screen and (max-width: 1024px) {
   .editor {
-    margin-bottom: 120px;
+    margin-bottom:20px;
   }
 }
 </style>

@@ -44,10 +44,8 @@ const Auth = {
 
 	///////LOGIN
 	async login(data) {
-		return await axios.post('hhttps://mentoriain.000webhostapp.com/api_login.php', {
-			email: data.EMAIL,
-			senha: data.PASSWORD,
-		});
+		return await axios.post(defaultW + '/login.php', data
+		);
 	},
 
 	async CadastroMusculo(data) {
@@ -65,7 +63,7 @@ const Auth = {
 	async CadastroTreino(data) {
 		return await axios.post(defaultW + '/cadastro_treino.php', data);
 	},
-	
+
 	async getCategoria() {
 		return await axios.post(defaultW + '/lista_categorias.php', {
 			id: 0,
@@ -123,7 +121,13 @@ const Auth = {
 		console.log(data)
 		return await axios.post(defaultW + '/market/registration-request', data)
 	},
+	logout() {
+		setTimeout(function () {
+			localStorage.clear();
+			window.location.href = "/login";
+		}, 1000);
 
+	},
 
 
 
