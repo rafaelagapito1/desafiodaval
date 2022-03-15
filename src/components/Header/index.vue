@@ -105,17 +105,31 @@
                 <span class="title">Receitas</span>
               </a>
             </li>
-            
+
             <li>
-              <a href="javascript:void(0);" class="have-submenu"        @click.prevent="goTO('/tokens')">
+              <a
+                href="javascript:void(0);"
+                class="have-submenu"
+                @click.prevent="goTO('/tokens')"
+              >
                 <span class="icon-thumbnail"
                   ><i class="dripicons-view-list"></i
                 ></span>
                 <span class="title">Tokens</span>
               </a>
             </li>
-
-          
+            <li>
+              <a
+                href="javascript:void(0);"
+                class="have-submenu"
+                @click.prevent="goTO('/Users')"
+              >
+                <span class="icon-thumbnail"
+                  ><i class="dripicons-user-group"></i
+                ></span>
+                <span class="title">Alunos</span>
+              </a>
+            </li>
           </div>
           <div
             id="mCSB_1_scrollbar_vertical"

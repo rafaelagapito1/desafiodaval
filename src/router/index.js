@@ -9,7 +9,7 @@ const Categoria = () => import('../views/Exercicios/Categorias.vue')
 const Musculos = () => import('../views/Exercicios/Musculos')
 const Treinos = () => import('../views/Exercicios/Treinos.vue')
 const Tokens = () => import('../views/Exercicios/Tokens.vue')
-
+const Users = () => import('../views/Users/index.vue')
 
 const routes = [
 
@@ -43,7 +43,12 @@ const routes = [
     name: 'Musculos',
     component: Musculos
   },
-
+  {
+    path: '/Users',
+    name: 'Users',
+    component: Users
+  },
+  
 
 
   {

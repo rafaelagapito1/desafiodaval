@@ -67,18 +67,10 @@
                     <div class="row content-table">
                       <div class="col-lg-12 text-center">
                         <el-button
-                          v-if="props.row.exercicios.length == 6"
                           type="success"
                           round
-                          @click="generate6(props.row)"
-                          >Baixar Treino
-                        </el-button>
-                        <el-button
-                          v-if="props.row.exercicios.length == 8"
-                          type="success"
-                          round
-                          @click="generate8(props.row)"
-                          >Baixar Treino
+                          @click="generate(props.row)"
+                          >Baixar Modelo
                         </el-button>
                       </div>
                     </div>
@@ -172,9 +164,7 @@
 
                   <el-input v-model="descricao" type="textarea"></el-input>
                 </div>
-                <div class="col-12">
-               
-                </div>
+                <div class="col-12"></div>
 
                 <div class="col-md-9">
                   <br />
@@ -244,6 +234,7 @@
                       <el-input
                         v-model="item.descricao"
                         type="textarea"
+                        maxlength="95"
                       ></el-input>
                       <br /><br />
                     </div>
@@ -311,25 +302,6 @@
         </div>
       </div>
     </div>
-
-    <div v-if="seis" style="display: none">
-      <iframe
-        :src="
-          'https://desafiodaval.com.br/api_pdf/treino_6/index.html?dados=' +
-          dadosSend
-        "
-        frameborder="0"
-      ></iframe>
-    </div>
-    <div v-if="oito" style="display: none">
-      <iframe
-        :src="
-          'https://desafiodaval.com.br/api_pdf/treino_8/index.html?dados=' +
-          dadosSend
-        "
-        frameborder="0"
-      ></iframe>
-    </div>
   </section>
 </template>
 
@@ -340,6 +312,7 @@ import * as moment from "moment";
 import Swal from "sweetalert2";
 import Auth from "../../services/routes";
 import Header from "../../components/Header/index.vue";
+import PDF from "../../components/PDF/index.vue";
 import lodash from "lodash";
 import Multiselect from "@vueform/multiselect";
 import { QuillEditor } from "@vueup/vue-quill";
@@ -347,7 +320,7 @@ import { Base64 } from "js-base64";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 export default {
   name: "Home",
-  components: { Header, Multiselect, QuillEditor },
+  components: { Header, Multiselect, QuillEditor, PDF },
   data() {
     return {
       oito: false,
@@ -426,6 +399,13 @@ export default {
     },
   },
   methods: {
+    generate(dados) {
+      if (dados.exercicios.length === 6) {
+        this.generate6(dados);
+      } else {
+        this.generate8(dados);
+      }
+    },
     generate6(dados) {
       this.load = true;
       let treino = {
@@ -436,7 +416,11 @@ export default {
       var dadosTable = JSON.stringify(treino);
       var encodedString = Base64.encode(dadosTable);
       this.dadosSend = encodedString;
-      console.log(encodedString);
+      window.open(
+        "https://desafiodaval.com.br/api_pdf/treino_6/index.html?dados=" +
+          encodedString,
+        "_blank"
+      );
       this.seis = true;
       setTimeout(() => {
         this.load = false;
@@ -453,6 +437,11 @@ export default {
       var dadosTable = JSON.stringify(treino);
       var encodedString = Base64.encode(dadosTable);
       this.dadosSend = encodedString;
+       window.open(
+        "https://desafiodaval.com.br/api_pdf/treino_8/index.html?dados=" +
+          encodedString,
+        "_blank"
+      );
       console.log(encodedString);
       this.oito = true;
       setTimeout(() => {
@@ -470,7 +459,8 @@ export default {
         if (this.Musculos[i].nome === this.value) {
           obj.id = this.Musculos[i].id;
           obj.nome = this.Musculos[i].nome;
-          obj.descricao = "";
+          obj.descricao =
+            "1° SET DE 15 REPETIÇÕES 2º SET DE 15 REPETIÇÕES 3° SET DE 15 REPETIÇÕES 4° SET DE 15 REPETIÇÕES";
         }
       }
       this.MusculosSelecionados.push(obj);
@@ -531,6 +521,8 @@ export default {
             });
             this.pages = 1;
             this.render = false;
+            this.descricao = "";
+            this.MusculosSelecionados = [];
           } else {
             this.$notify({
               message: "Algo deu errado",
@@ -794,10 +786,6 @@ h3 {
 
 .toolbar {
   margin-right: 5px;
-
-  button {
-    cursor: pointer;
-  }
 }
 
 code,
@@ -884,23 +872,6 @@ pre {
 .token.function,
 .token.class-name {
   color: #f1fa8c;
-}
-
-.keyword-highlight {
-  padding: 0 2px;
-  position: relative;
-
-  &::after {
-    content: "";
-    background: currentColor;
-    position: absolute;
-    opacity: 0.25;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-  }
 }
 
 .token.keyword {
